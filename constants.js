@@ -2,8 +2,7 @@
 const prompts = [
   ["hi", "hey", "hello", "good morning", "good afternoon"],
   ["how are you", "how is life", "how are things"],
-  ["what are you doing", "what is going on", "what is up"],
-  ["how old are you"],
+  ["what are you doing", "what is going on", "what is up", "what up"],
   ["who are you", "are you human", "are you bot", "are you human or bot"],
   ["who created you", "who made you"],
   [
@@ -30,11 +29,11 @@ const prompts = [
 // Possible responses, in corresponding order
 
 const replies = [
-  ["Hello!", "Hi!", "Hey!", "Hi there!","Howdy"],
+  ["Hello!", "Hi!", "Hey!", "Hey there!"],
   [
-    "Fine... how are you?",
-    "Pretty well, how are you?",
-    "Fantastic, how are you?"
+    "Doing well, thanks. What can I help you with?",
+    "Fantastic! What can I help you with?",
+    "Excellent! What can I help you with?"
   ],
   [
     "Nothing much",
@@ -44,23 +43,18 @@ const replies = [
   ],
   ["I am infinite"],
   ["I am just a bot", "I am a bot. What are you?"],
-  ["The one true God, JavaScript"],
   ["I am nameless", "I don't have a name"],
-  ["I love you too", "Me too"],
-  ["Have you ever felt bad?", "Glad to hear it"],
   ["Why?", "Why? You shouldn't!", "Try watching TV"],
   ["What about?", "Once upon a time..."],
   ["Tell me a story", "Tell me a joke", "Tell me about yourself"],
   ["Bye", "Goodbye", "See you later"],
   ["Sushi", "Pizza"],
   ["Bro!"],
-  ["Great question"],
-  ["That's ok","I understand","What do you want to talk about?"],
-  ["Please say something :("],
-  ["Haha!","Good one!"]
+  ["Great question."],
+  ["I'm sorry to hear that.","What do you want to talk about?"],
 ]
 
-// Random for any other user input
+// Other user input
 
 const alternative = [
   "Same",
@@ -70,7 +64,3 @@ const alternative = [
   "I'm listening...",
   "I don't understand :/"
 ]
-
-// Whatever else you want :)
-
-const coronavirus = ["Please stay home", "Wear a mask", "Fortunately, I don't have COVID", "These are uncertain times"]

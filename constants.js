@@ -32,7 +32,7 @@ const prompts = [
 
 const replies = [
   ["i love you"],
-  ["Hello!", "Hi!", "Hey!", "Hi there!","Howdy"],
+  ["Hello!", "Hi!", "Hey!", "Hi there!", "Howdy"],
   [
     "Fine... how are you?",
     "Pretty well, how are you?",
@@ -72,7 +72,3 @@ const alternative = [
   "I'm listening...",
   "I don't understand :/"
 ]
-
-// Whatever else you want :)
-
-const coronavirus = ["Please stay home", "Wear a mask", "Fortunately, I don't have COVID", "These are uncertain times"]

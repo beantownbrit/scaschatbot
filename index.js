@@ -91,7 +91,7 @@ function addChat(input, product) {
   setTimeout(() => {
     botText.innerText = `${product}`;
     textToSpeech(product)
-  }, 2000
+  }, 1000
   )
 
 }

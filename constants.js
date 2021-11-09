@@ -4,20 +4,19 @@ const prompts = [
   ["hi", "hey", "hello", "good morning", "good afternoon"],
   ["how are you", "how is life", "how are things"],
   ["what are you doing", "what is going on", "what is up"],
-  ["how old are you"],
-  ["who are you", "are you human", "are you bot", "are you human or bot"],
-  ["who created you", "who made you"],
-  [
-    "your name please",
+  ["who are you", 
+    "are you human", 
+    "are you bot", 
+    "are you human or bot", 
+    "who created you", 
+    "who made you", 
+    "your name please", 
     "your name",
     "may i know your name",
     "what is your name",
     "what call yourself"
   ],
-  ["i love you"],
-  ["happy", "good", "fun", "wonderful", "fantastic", "cool"],
-  ["bad", "bored", "tired"],
-  ["help me", "tell me story", "tell me joke"],
+  ["help me", "tell me what to do"],
   ["ah", "yes", "ok", "okay", "nice"],
   ["bye", "good bye", "goodbye", "see you later"],
   ["what should i eat today"],
@@ -31,26 +30,15 @@ const prompts = [
 // Possible responses, in corresponding order
 
 const replies = [
-  ["i love you"],
+  ["i love you!"],
   ["Hello!", "Hi!", "Hey!", "Hi there!", "Howdy"],
   [
-    "Fine... how are you?",
-    "Pretty well, how are you?",
-    "Fantastic, how are you?"
+    "Excellent, thanks! What can I help you with?",
+    "Fantastic! What can I help you with?",
   ],
-  [
-    "Nothing much",
-    "About to go to sleep",
-    "Can you guess?",
-    "I don't know actually"
-  ],
-  ["I am infinite"],
-  ["I am just a bot", "I am a bot. What are you?"],
-  ["The one true God, JavaScript"],
-  ["I am nameless", "I don't have a name"],
-  ["I love you too", "Me too"],
-  ["Have you ever felt bad?", "Glad to hear it"],
-  ["Why?", "Why? You shouldn't!", "Try watching TV"],
+  ["Ready to help you with your question! What can I help you with?"],
+  ["I am a bot created for the Small Claims Advisory Service to help you with your legal inquiry. What can I help you with?"],
+  ["insert answers here"],
   ["What about?", "Once upon a time..."],
   ["Tell me a story", "Tell me a joke", "Tell me about yourself"],
   ["Bye", "Goodbye", "See you later"],
@@ -65,10 +53,6 @@ const replies = [
 // Random for any other user input
 
 const alternative = [
-  "Same",
-  "Go on...",
-  "Bro...",
-  "Try again",
-  "I'm listening...",
-  "I don't understand :/"
+  "Apologies, please try another question.",
+  "Sorry, please try again."
 ]

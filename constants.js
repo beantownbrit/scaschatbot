@@ -1,5 +1,6 @@
 // Options the user could type in
 const prompts = [
+  ["ian"],
   ["ian", "hey", "hello", "good morning", "good afternoon"],
   ["how are you", "how is life", "how are things"],
   ["what are you doing", "what is going on", "what is up"],
@@ -30,7 +31,8 @@ const prompts = [
 // Possible responses, in corresponding order
 
 const replies = [
-  ["I love you", "Hello!", "Hi!", "Hey!", "Hi there!","Howdy"],
+  ["i love you"],
+  ["Hello!", "Hi!", "Hey!", "Hi there!","Howdy"],
   [
     "Fine... how are you?",
     "Pretty well, how are you?",

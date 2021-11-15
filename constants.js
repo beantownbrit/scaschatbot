@@ -32,7 +32,7 @@ const prompts = [
 
 const replies = [
   ["i love you!"],
-  ["Hello!", "Hi!", "Hey!", "Hi there!", "Howdy"],
+  ["Hello! What can I help you with today?", "Hi! What can I help you with?", "Hey! What can I help you with?", "Hi there! What can I help you with?"],
   ["This sounds like a housing problem. We can find you help with that."],
   ["Excellent, thanks! What can I help you with?", "Fantastic! What can I help you with?"],
   ["Ready to help you with your question! What can I help you with?"],

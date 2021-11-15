@@ -28,7 +28,7 @@ const prompts = [
   ["haha","ha","lol","hehe","funny","joke"]
 ]
 
-// Bot responses in order
+// Bot responses, in order
 
 const replies = [
   ["i love you!"],

@@ -2,6 +2,7 @@
 const prompts = [
   ["ian"],
   ["hi", "hey", "hello", "good morning", "good afternoon"],
+  ["my landlord is kicking me out"],
   ["how are you", "how is life", "how are things"],
   ["what are you doing", "what is going on", "what is up"],
   ["who are you", 
@@ -36,6 +37,7 @@ const replies = [
     "Excellent, thanks! What can I help you with?",
     "Fantastic! What can I help you with?",
   ],
+  ["This sounds like a housing problem. We can help you find help with that.],
   ["Ready to help you with your question! What can I help you with?"],
   ["I am a bot created for the Small Claims Advisory Service to help you with your legal inquiry. What can I help you with?"],
   ["insert answers here"],

@@ -33,7 +33,7 @@ const prompts = [
 const replies = [
   ["i love you!"],
   ["Hello!", "Hi!", "Hey!", "Hi there!", "Howdy"],
-  ["This sounds like a housing problem. We can help you find help with that."],
+  ["This sounds like a housing problem. We can find help with that."],
   ["Excellent, thanks! What can I help you with?", "Fantastic! What can I help you with?"],
   ["Ready to help you with your question! What can I help you with?"],
   ["I am a bot created for the Small Claims Advisory Service to help you with your legal inquiry. What can I help you with?"],

@@ -51,10 +51,3 @@ const replies = [
   ["Please say something :("],
   ["Haha!","Good one!"]
 ]
-
-// Random for any other user input
-
-const alternative = [
-  "Apologies, please try another question.",
-  "Sorry, please try again."
-]

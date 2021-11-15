@@ -80,18 +80,18 @@ function addChat(input, product) {
   botImg.src = "gavel.png";
   botImg.className = "avatar";
   botDiv.className = "bot response";
-  botText.innerText = "Typing...";
+  botText.innerText = "...";
   botDiv.appendChild(botText);
   botDiv.appendChild(botImg);
   messagesContainer.appendChild(botDiv);
   // Keep messages at most recent
   messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
 
-  // Fake delay to seem "real"
+  // Bot typing delay
   setTimeout(() => {
     botText.innerText = `${product}`;
     textToSpeech(product)
-  }, 1000
+  }, 500
   )
 
 }

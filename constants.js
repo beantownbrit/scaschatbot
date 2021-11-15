@@ -1,4 +1,4 @@
-// Options the user could type in
+// User query options
 const prompts = [
   ["ian"],
   ["hi", "hey", "hello", "good morning", "good afternoon"],
@@ -33,11 +33,8 @@ const prompts = [
 const replies = [
   ["i love you!"],
   ["Hello!", "Hi!", "Hey!", "Hi there!", "Howdy"],
-  [
-    "Excellent, thanks! What can I help you with?",
-    "Fantastic! What can I help you with?",
-  ],
   ["This sounds like a housing problem. We can help you find help with that."],
+  ["Excellent, thanks! What can I help you with?", "Fantastic! What can I help you with?"],
   ["Ready to help you with your question! What can I help you with?"],
   ["I am a bot created for the Small Claims Advisory Service to help you with your legal inquiry. What can I help you with?"],
   ["insert answers here"],

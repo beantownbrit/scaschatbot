@@ -31,9 +31,6 @@ function output(input) {
     product = compare(prompts, replies, text);
   } else if (text.match(/thank/gi)) {
     product = "You're welcome!"
-  } else if (text.match(/(corona|covid|virus)/gi)) {
-    // If no match, check if message contains `coronavirus`
-    product = coronavirus[Math.floor(Math.random() * coronavirus.length)];
   } else {
     // If all else fails: random alternative
     product = alternative[Math.floor(Math.random() * alternative.length)];

@@ -5,7 +5,6 @@
 	<title>Small Claims Advisory Service Chatbot</title>
 	<link rel="icon" href="img/logo.png"/>
 	<link rel="stylesheet" href="css/style.css"/>
-  <script type="text/javascript"></script>
   <script type="text/javascript" src="js/index.js" ></script>
   <script type="text/javascript" src="js/constants.js" ></script>
   <link
@@ -18,7 +17,9 @@
 		<div id="chat" class="chat">
 			<div id="messages" class="messages"></div>
 			<input id="input" type="text" placeholder="Ask me a question here..." autocomplete="off" autofocus="true" />
+      <button id="send-msg" class="border" onclick="runApp()">Send</button>
 		</div>
+        </div>
 		<img src="img/sidebar.png" alt="SCAS Logo" height="200vh">
 	</div>
 </body>

@@ -68,7 +68,7 @@ function addChat(input, product) {
   let userDiv = document.createElement("div");
   userDiv.id = "user";
   userDiv.className = "user response";
-  userDiv.innerHTML = `<img src="img/user.png" class="avatar"><span>${input}</span>`;
+  userDiv.innerHTML = `<span>${input}</span><img src="img/user.png" class="avatar">`;
   messagesContainer.appendChild(userDiv);
 
   let botDiv = document.createElement("div");
@@ -79,17 +79,15 @@ function addChat(input, product) {
   botImg.className = "avatar";
   botDiv.className = "bot response";
   botText.innerText = "...";
-  botDiv.appendChild(botText);
   botDiv.appendChild(botImg);
+  botDiv.appendChild(botText);
   messagesContainer.appendChild(botDiv);
-  // Keep messages at most recent
   messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
 
-  // Bot typing delay
   setTimeout(() => {
     botText.innerText = `${product}`;
     textToSpeech(product)
-  }, 500
+  }, 350
   )
 
 }

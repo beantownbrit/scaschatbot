@@ -8,9 +8,7 @@ html {
 }
 
 body {
-  font-family: 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, Helvetica,
-    sans-serif;
+  font-family: Source Sans Pro;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 	background-color: rgba(165, 28, 48, .25);
@@ -55,12 +53,12 @@ input {
 	display: flex;
 	flex-direction: column;
 	overflow: scroll;
-	height: 90%;
+	height: 100%;
 	width: 100%;
 	background-color: white;
 	padding: 15px;
-	margin: 15px;
-	border-radius: 10px;
+	margin: 5px;
+	border-radius: 0px;
 }
 
 #bot {
@@ -68,12 +66,11 @@ input {
 }
 
 .bot {
-	font-family: Consolas, 'Courier New', Menlo, source-code-pro, Monaco,  
-	monospace;
+	font-family: Fira Mono;
 }
 
 .avatar {
-	height: 25px;
+	height: 40px;
 }
 
 .response {

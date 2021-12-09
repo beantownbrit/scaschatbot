@@ -1,32 +1,1401 @@
 <!DOCTYPE html>
-<html>
-  
-<head>
-	<title>Small Claims Advisory Service Chatbot</title>
-	<link rel="icon" href="img/logo.png"/>
-	<link rel="stylesheet" href="css/style.css"/>
-  <script type="text/javascript" src="js/index.js" ></script>
-  <script type="text/javascript" src="js/constants.js" ></script>
-  <link
+<HEAD>
+	<title>SCAS Chatbot</title>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+	<link rel="apple-touch-icon" href="https://www.qnamarkup.org/images/QnA_300.png"/>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+    <link
       href="https://fonts.googleapis.com/css?family=Fira+Mono|Source+Sans+Pro&display=swap"
       rel="stylesheet" />
-</head>
   
-<body>
+  <FORM name="FORM" id="FORM"><div id="conversation" style="margin:15px auto 0 auto;padding:0 15px;max-width:500px"> <link rel="stylesheet" href="css/style.css">
+<div id="icon" style="background-size: 180px 220px;background-image: url('https://beantownbrit.github.io/scaschatbot/img/sidebar.png');"></div>
   
-	<div id="container" class="container">
-		<div id="chat" class="chat">
-			<div id="messages" class="messages"></div>
-			<input id="input" type="text" placeholder="Ask me a question here..."/>
-      </div>	 
-    <img src="https://beantownbrit.github.io/scaschatbot/img/sidebar.png" alt="SCAS Logo" height="200vh">	
-        </div>
- 
-          <section>
-        <p><i>The Massachusetts Small Claims Advisory Service are neither lawyers nor law students. We are college undergraduates who have studied small claims law. <br>As such, we can give legal information — not legal advice.</i><b> You should not rely on this bot as a source of legal information.</b></p>
-  </div>
-         </section>
-  
-</body>
+</HEAD>
 
-</html>
+<BODY MARGINWIDTH="0" MARGINHEIGHT="0" onLoad="startAT('1');"><style>	
+
+	body {
+    font-family: Source Sans Pro;
+    background-color: rgba(165, 28, 48, .25);
+	}
+
+	#rawmarkup{
+		display:none;
+	}
+
+	
+	#QandA img{
+		width:100%;
+	}
+
+
+	div.main{
+		min-width:300px;
+		max-width:650px;
+		margin: 0 auto;
+	  padding:0 5px 0 5px;
+		}
+
+	div.frame{
+
+		float:left;
+
+		width:100%;
+
+		margin:5px 0 5px 0;
+
+	}
+
+	div.full{
+
+		float:left;
+
+		width:100%;
+
+	}
+
+	.button{
+
+		padding:8px;
+
+		margin:8px 0 0px 0;
+
+		width:100%;
+
+	}
+
+	div.question_text{
+
+		float:left;
+
+		font-family: Fira Mono;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		color:#ffffff;
+
+		min-width:30px;
+
+		background:#ad5f5d;
+
+		border-radius: 15px;
+
+		padding:10px 15px 14px 15px;
+
+		margin-right:45px;
+
+	}
+
+
+
+	div.question_text a:link, div.question_text a:hover, div.question_text a:active, div.question_text a:visited{ color:#e3fbfc; } 
+
+
+
+	div.question_arrow{
+
+		float:left; 
+
+		width: 0; 
+
+		height: 0; 
+
+		border-left: 5px solid transparent; 
+
+		border-right: 10px solid transparent; 
+
+		border-top: 15px solid #ad5f5d;
+
+		margin:0 20px;
+
+	}
+
+	div.ans_text{
+
+		float:right;
+
+		font-family: Source Sans Pro;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		color:#000000;
+
+		min-width:30px;
+
+		background:#eeeeee;
+
+		border-radius: 15px;
+
+		padding:10px 15px 14px 15px;
+
+		margin-left:45px;
+
+	}
+
+	div.ans_arrow{
+
+		float:right; 
+
+		width: 0; 
+
+		height: 0; 
+
+		border-left: 10px solid transparent; 
+
+		border-right: 5px solid transparent; 
+
+		border-top: 15px solid #eeeeee;
+
+		margin:0 20px;
+
+	}
+
+	div.choices{
+
+		float:left;
+
+		width:100%;
+
+		margin:15px 0 0 0;
+
+	}
+
+	div.standard_buttons{
+
+		float:left;
+
+		width:100%;
+
+		margin-top:5px;
+
+		border-top: 1px solid #ddd; 
+
+		padding-top:12px;		
+
+	}
+
+	div.credits{
+
+		float:left;
+
+		dispaly:none;
+
+		width:100%;
+
+		background:#eee;
+
+		margin:0px 0 15px 0;
+
+	}
+
+	div.credit_text{
+
+		font-family: Verdana, Geneva, sans-serif;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		padding:4px 15px 10px 15px;
+
+	}
+
+	li.error{
+
+		list-style-type: none;
+
+		background:#ffdddd;
+
+		margin: 10px 0 0 0;
+
+		padding: 5px;
+
+	}
+
+
+
+	.qpad {
+
+		float:left;
+
+		padding:0 15px;
+
+	}
+
+	
+
+	a.sbutton {
+
+		float:left;
+
+		font-family: Verdana, Geneva, sans-serif;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		width:48%;
+
+		background: #eee;
+
+		border-radius: 8px;
+
+		padding:10px 0px 12px 0;
+
+		margin: 0 0 3px 0;
+
+		border: solid 1px #888;
+
+		text-align:center;
+
+		color: #000000;
+
+		text-decoration: none;
+
+	}
+
+
+
+	a.sbutton:hover, a.sbutton:active {
+
+		float:left;
+
+		font-family: Verdana, Geneva, sans-serif;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		width:48%;
+
+		background: #ddd;
+
+		border-radius: 8px;
+
+		padding:10px 0px 12px 0;
+
+		margin: 0 0 3px 0;
+
+		border: solid 1px #888;
+
+		text-align:center;
+
+		color: #000000;
+
+		text-decoration: none;
+
+	}
+
+
+
+	a.qabutton {
+
+		float:left;
+
+		font-family: Verdana, Geneva, sans-serif;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		width:100%;
+
+		background: #eee;
+
+		border-radius: 8px;
+
+		padding:10px 0px 12px 0;
+
+		margin: 0 0 8px 0;
+
+		border: solid 1px #888;
+
+		text-align:left;
+
+		color: #000000;
+
+		text-decoration: none;
+
+	}
+
+
+
+	a.qabutton:hover, a.qabutton:active {
+
+		float:left;
+
+		font-family: Verdana, Geneva, sans-serif;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		width:100%;
+
+		background: #ddd;
+
+		border-radius: 8px;
+
+		padding:10px 0px 12px 0;
+
+		margin: 0 0 8px 0;
+
+		border: solid 1px #888;
+
+		text-align:left;
+
+		color: #000000;
+
+		text-decoration: none;
+
+	}
+
+	
+
+
+
+	div.xdiv {
+
+		float:left;
+
+		width:100%;
+
+		margin: 0 0 8px 0;
+
+		background: #eee;
+
+		border: solid 1px #888;
+
+		border-radius: 8px;
+
+	}	
+
+
+
+	input.xinput {
+
+		-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+		-moz-box-sizing: border-box;    /* Firefox, other Gecko */ 
+
+		box-sizing: border-box;         /* Opera/IE 8+ */
+
+		float:left;
+
+		width:100%;
+
+		font-family: Verdana, Geneva, sans-serif;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		background: #fff;
+
+		border-top-left-radius: 8px;
+
+		border-top-right-radius: 8px;
+
+		padding:10px 10px 12px 10px;
+
+		border: solid 0px #888;
+
+		border-bottom: solid 1px #888;
+
+		text-align:left;
+
+		color: #000000;
+
+		text-decoration: none;
+
+	}
+
+	
+
+	a.xbutton {
+
+		float:left;
+
+		width:100%;
+
+		text-align:left;
+
+		font-family: Verdana, Geneva, sans-serif;
+
+		font-size: 14px;
+
+		line-height: 20px;
+
+		background: #eee;
+
+		border-radius: 8px;
+
+		padding:10px 0px 12px 0px;
+
+		color: #000000;
+
+		text-decoration: none;
+
+	}
+
+	
+
+	a.xbutton:hover, a.xbutton:active {
+
+		border-top-left-radius: 0px;
+
+		border-top-right-radius: 0px;
+
+		background: #ddd;
+
+	}
+
+</style>
+  
+<FORM name="FORM" id="FORM"><div id="conversation" style="margin:15px auto 0 auto;padding:0 15px;max-width:500px"><div id='QandA' class='QandA'><div style='padding:15px;background:#ddffdd;text-align:center;'>Loading QnA...</div></div><div id='Choices' class='choices'></div><div id="rawmarkup" style="display:none;">Q%28main%29%3A+Hi+there%21+I%27m+the+Harvard+SCAS+Chatbot%2C+a+resource+directory+of+Massachusetts+small+claims+information.%3Cbr%3E%3Cbr%3EWhat+can+I+help+you+with+today%3F%0D%0A%0D%0AA%3A+Filing+a+small+claim+%0D%0A%09Q%28claimstart%29%3A+Have+you...%0D%0A%09A%3A+Been+wronged+and+want+to+sue.%0D%0A%09%09Q%28instate%29%3A+Is+this+person%2Fbusiness+located+in+Massachusetts%3F%0D%0A%09%09A%3A+Yes.%0D%0A%09%09%09Q%28claims%29%3A+What+would+you+like+to+know+about+the+claims+process%3F%0D%0A%09%09%09A%3A+How+do+I+get+started%3F%0D%0A%09%09%09%09Q%28demand%29%3A+First%2C+send+a+%22demand+letter%22+to+the+person+you+want+to+sue%E2%80%93preferably+typed.+Include+a+chronology+%28or+account%29+of+what+happened.+Be+as+specific+as+you+can%2C+and+mention+dates%2C+specific+contracts%2C+or+interactions.+Secondly%2C+include+the+amount+of+money+that+the+defendant+owes+you.+Lastly%2C+include+a+statement+that+informs+the+reader+that+%22If+you+do+not+fulfill+this+request+within+30+days%2C+I+intend+to+sue+in+small+claims+court.%22+If+the+other+party+does+not+respond+within+30+days%2C+then+you+should+begin+the+small+claims+process.%0D%0A%09%09%09%09A%3A+I%27d+like+help+drafting+this+letter.%0D%0A%09%09%09%09%09Q%28demandhelp%29%3A+%3Ca+href%3D%22https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1i_IxX_9kNtpHTm_F6T_jlBISaVfrsMzk%2Fview%3Fusp%3Dsharing%22%3EClick+here%3C%2Fa%3E+to+access+an+example+demand+letter.+Demand+letters+are+generally+not+required%2C+but+can+be+useful+to+organize+your+case.%0D%0A%09%09%09%09%09A%3A+I+have+another+question+regarding+claims.%0D%0A%09%09%09%09%09%09Q%28demandhelpq%29%3AGOTO%3Aclaims%0D%0A%09%09%09%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09%09%09%09Q%28demandhelpmenu%29%3AGOTO%3Amain%0D%0A%09%09%09%09A%3A+I+have+another+question+regarding+claims.%0D%0A%09%09%09%09%09Q%28demandq%29%3AGOTO%3Aclaims%0D%0A%09%09%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09%09%09Q%28demandmenu%29%3AGOTO%3Amain%0D%0A%09%09%09A%3A+How+much+will+this+cost%3F%0D%0A%09%09%09%09Q%28cost%29%3A+If+your+claim+is+%24500+or+less%2C+it+costs+%2440+to+file.%3Cbr%3EIf+your+claim+is+%24500.01+to+%242%2C000.00%2C+it+costs+%2450+to+file.%3Cbr%3EIf+your+claim+is+%242%2C000.01+to+%245%2C000.00%2C+it+costs+%24100+to+file.%3Cbr%3EIf+your+claim+is+%245%2C000.01+to+%247%2C000.00%2C+it+costs+%24150+to+file.%3Cbr%3E%0D%0AYou+can+usually+recover+this+filing+fee+%E2%80%94+there+is+a+field+on+the+small+claims+filing+form+for+that.+However%2C+that+decision+is+up+to+the+clerk+magistrate.%0D%0A%09%09%09%09A%3A+I%27d+like+more+help.%0D%0A%09%09%09%09%09Q%28costhelp%29%3AGOTO%3Ahelp%0D%0A%09%09%09%09A%3A+I+have+another+question+regarding+claims.%0D%0A%09%09%09%09%09Q%28costq%29%3AGOTO%3Aclaims%0D%0A%09%09%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09%09%09Q%28costmenu%29%3AGOTO%3Amain%0D%0A%09%09%09A%3A+Where+do+I+sue%3F%0D%0A%09%09%09%09Q%28wheresue%29%3AUse+the+courthouse+that+serves+the+city+in+which+you+live+or+work+or+where+the+defendant+lives+or+works.+It%E2%80%99s+recommended+that+you+go+to+the+court+where+the+defendant+is+located+so+it+is+easier+to+enforce+a+judgment+if+you+win+the+case.+If+you+choose+a+court+near+yourself%2C+you+will+have+to+file+a+different+form+in+the+court+near+the+defendant%2C+and+it+will+cost+money+to+file.%0D%0A%09%09%09%09A%3A+I%27d+like+more+help.%0D%0A%09%09%09%09%09Q%28wheresuehelp%29%3AGOTO%3Ahelp%0D%0A%09%09%09%09A%3A+I+have+another+question+regarding+claims.%0D%0A%09%09%09%09%09Q%28wheresueq%29%3AGOTO%3Aclaims%0D%0A%09%09%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09%09%09Q%28wheresuemain%29%3AGOTO%3Amain%0D%0A%09%09%09A%3A+What+do+I+say+in+court%3F%0D%0A%09%09%09%09Q%28saycourt%29%3AGOTO%3Acourt%0D%0A%09%09%09A%3A+Where+can+I+find+resources+on+filing+a+claims%3F%0D%0A%09%09%09%09Q%28claimsresources%29%3AGOTO%3Aresources%0D%0A%09%09A%3A+No.%0D%0A%09%09%09Q%28oos%29%3AThe+Massachusetts+%22Long-Arm+Statute%22+allows+plaintiffs+to+sue+parties+who+are+out-of-state+as+long+as+they+do+business+in+Massachusetts%2C+possesses+property+in+Massachusetts%2C+or+contracts%2Fsupplies+services+in+Massachusetts.+If+the+party+profits+from+business+in+Massachusetts+and+their+action%2Flack+of+action+also+causes+substantial+damage+in+Massachusetts%2C+then+they+also+may+be+sued.%0D%0A%09%09%09A%3A+I%27d+like+information+on+beginning+a+claim.%0D%0A%09%09%09%09Q%28oosclaims%29%3AGOTO%3Aclaims%0D%0A%09%09%09A%3A+I%27m+not+sure+if+my+situation+meets+the+above+criteria.%0D%0A%09%09%09%09Q%28ooshelp%29%3AGOTO%3Ahelp%0D%0A%09%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09%09Q%28oosmain%29%3AGOTO%3Amain%0D%0A%09A%3A+Won+your+case+and+want+to+get+your+money+back.%0D%0A%09%09Q%28won%29%3A+The+judge+should+set+up+a+payment+hearing+%28either+on+the+day+of+the+hearing%2C+or+at+a+later+date%29+for+the+debtor+and+the+creditor+to+set+up+a+payment+agreement.+If+you+did+not+file+in+a+courthouse+near+the+defendant%E2%80%99s+workplace+or+residence%2C+you+will+have+to+file+a+supplementary+process+application+at+a+court+in+one+of+those+two+areas.%0D%0A%09%09A%3A+I%27m+not+sure+when%2Fwhere+my+payment+hearing+is.%0D%0A%09%09%09Q%28wonhearing%29%3AGOTO%3Ahelp%0D%0A%09%09A%3A+I%27d+like+help+filing+a+supplementary+process+application.%0D%0A%09%09%09Q%28wonapplication%29%3AGOTO%3Ahelp%0D%0A%09%09A%3A+I+need+more+help.%0D%0A%09%09%09Q%28wonhelp%29%3AGOTO%3Aresources%0D%0A%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09Q%28wonmenu%29%3AGOTO%3Amain%0D%0A%09A%3A+Been+sued+and+need+guidance.%0D%0A%09%09Q%28sued%29%3A+What+would+you+like+to+know%3F%0D%0A%09%09A%3A+Do+I+need+to+show+up+to+court%3F%0D%0A%09%09%09Q%28showup%29%3AYes.+If+you+do+not+show+up+in+court%2C+the+plaintiff+%28whoever+is+suing+you%29+will+automatically+win+the+case.+Being+in+court+allows+you+to+tell+your+side+of+the+story+and+ask+for+a+settlement+that+will+be+more+beneficial+for+you.%0D%0A%09%09%09A%3A+I%27d+like+more+guidance.%0D%0A%09%09%09%09Q%28showuphelp%29%3AGOTO%3Ahelp%0D%0A%09%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09%09Q%28showupmenu%29%3AGOTO%3Amain%0D%0A%09%09A%3A+What+do+I+say+to+win+my+case%3F%0D%0A%09%09%09Q%28court%29%3AWhile+we+cannot+say+whether+or+not+you+will+win+your+case%2C+a+good+guide+to+what+to+present+to+the+clerk+magistrate+is+as+follows%3A%3Cbr%3E-+A+brief+overview+of+the+conflict.%3Cbr%3E-+A+more+detailed+chronology+of+what+happened.+Be+sure+to+be+organized%2C+clear%2C+and+concise%3B+bring+along+evidence+such+as+receipts%2C+call+records%2C+or+pictures+that+might+help+your+case.%3Cbr%3E-+What+you%E2%80%99ve+already+done+to+try+to+solve+the+problem.%3Cbr%3E-+What+the+law+says+should+happen.%3Cbr%3E-+A+suggestion+for+how+much+you+are+owed.%0D%0A%09%09%09A%3A+I%27d+like+more+guidance.%0D%0A%09%09%09%09Q%28courthelp%29%3AGOTO%3Ahelp%0D%0A%09%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09%09Q%28courtmenu%29%3AGOTO%3Amain%0D%0A%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09Q%28suedmenu%29%3AGOTO%3Amain%0D%0A%0D%0AA%3A+Consumer+protection+law%0D%0A%09Q%28business%29%3A+Under+Chapter+93A+of+Massachusetts+General+Law%2C+you+can+sue+for+double+or+triple+damages%2C+meaning+that+if+the+business+owes+you+%24100%2C+you+are+entitled+to+sue+them+for+%24200+or+%24300.+Mentioning+Chapter+93A+and+double%2Ftriple+damages+in+the+demand+letter+would+also+be+helpful.%0D%0A%09A%3A+I%27d+like+to+know+more+about+drafting+a+demand+letter.%0D%0A%09%09Q%28businesssdemand%29%3AGOTO%3Ademand%0D%0A%09A%3A+I%27d+like+to+know+more+about+Chapter+93A.%0D%0A%09%09Q%28businessresources%29%3AGOTO%3Aresources%0D%0A%09A%3A+I%27d+like+to+know+more+about+filing+a+claim.%0D%0A%09%09Q%28businessclaim%29%3AGOTO%3Aclaims%0D%0A%0D%0AA%3A+Online+resources+bank%0D%0A%09Q%28ref%29%3AGOTO%3Aresources%0D%0A%0D%0AA%3A+About+SCAS%0D%0A%09Q%28about%29%3A+The+Small+Claims+Advisory+Service+is+a+part+of+the+Phillips+Brooks+House+Association%2C+a+student-run+public+service+organization+affiliated+with+Harvard+College.%0D%0A%09A%3A+Our+history%0D%0A%09%09Q%28abouthistory%29%3AGOTO%3Ahistory%0D%0A%09A%3A+Our+mission%0D%0A%09%09Q%28aboutmission%29%3AGOTO%3Amission%0D%0AA%3A+Contact+us%0D%0A%09Q%28contact%29%3AGOTO%3Ahelp%0D%0A%0D%0A%0D%0AQ%28help%29%3A+We+can+help%21+Would+you+like+to+contact+us+by+email+or+phone%3F%0D%0AA%3A+Email%0D%0A%09Q%28email%29%3A+You+can+email+SCAS+directly+at+%3Cb%3E%3Ca+href%3D%22mailto%3Amasmallclaims%40gmail.com%22%3Emasmallclaims%40gmail.com%3C%2Fa%3E.%3C%2Fb%3E+You+can+also+send+a+transcript+of+today%27s+chat+by+clicking+the+button+below.+A+volunteer+will+get+back+to+you+within+48+hours.%0D%0A%09A%3A+Email+my+transcript.%0D%0A%09%09Q%28body%29%3A+Please+enter+a+short+description+of+your+remaining+legal+issue%3A%0D%0A%09%09X%3A%0D%0A%09%09%09Q%28send%29%3AThanks%21+Click+below+to+send+your+transcript.%0D%0A%09%09%09A%5Bjavascript%3Amail2%28%27masmallclaims%40gmail.com%27%2C%27SCASbot+Transcript%27%2Ctranscript%28%29%29%3B%5D%3A+Email+my+transcript.%0D%0A%09%09%09%09Q%28emailreturn%29%3AGOTO%3Amain%0D%0A%09%09%09%09A%3A+Return+to+main+menu.%0D%0A%09A%3A+Return+to+main+menu.%0D%0A%09%09Q%28ereturn%29%3AGOTO%3Amain%0D%0AA%3A+Phone%0D%0A%09Q%28phone%29%3A+You+can+call+a+SCAS+volunteer+at+%3Cb%3E%28833%29+365-7227%3C%2Fb%3E.+If+prompted%2C+please+leave+us+a+message+and+a+volunteer+will+try+to+return+your+call+within+48+hours.%0D%0A%09A%3A+Return+to+main+menu.%0D%0A%09%09Q%28preturn%29%3AGOTO%3Amain%0D%0AA%3A%5Bhttps%3A%2F%2Fwww.masmallclaims.org%2F%5DVisit+our+website+at+%3Cb%3Emasmallclaims.org%3C%2Fb%3E%0D%0A%0D%0AQ%28resources%29%3A+Below+are+useful+resources+on+Massachusetts+laws%2C+rules+and+fees%2C+forms%2C+and+recommended+sources.+Click+below+to+be+directed+to+a+subject+page%3A%0D%0AA%3A%5Bhttps%3A%2F%2Fwww.mass.gov%2Ftopics%2Fcourts-self-help%5DMass.gov+Courts+Self-Help%0D%0AA%3ASmall+claims%0D%0A%09Q%28resourcesclaims%29%3ASmall+Claims+Resources%0D%0A%09A%3A%5Bhttps%3A%2F%2Fwww.mass.gov%2Fsmall-claims%5DMass.gov+General+Information%0D%0A%09A%3A%5Bhttps%3A%2F%2Fwww.mass.gov%2Flists%2Fsmall-claims-court-forms%5DSmall+Claims+Standards%0D%0AA%3A%5Bhttps%3A%2F%2Fmalegislature.gov%2FLaws%2FGeneralLaws%2FPartI%2FTitleXV%2FChapter93A%5DChapter+93A+%28unfair+or+deceptive+acts%2Fpractices+by+businesses%0D%0AA%3A+Alternative+dispute+resolution+services%0D%0A%09Q%28resourcesADR%29%3A+Alternative+Dispute+Resolution+Services%0D%0A%09A%3A%5Bhttps%3A%2F%2Fclinics.law.harvard.edu%2Fhmp%2F%5DThe+%3Cb%3EHarvard+Mediation+Program%3C%2Fb%3E+is+run+by+the+Harvard+Law+School+and+provides+trained+mediators+for+disputes.%0D%0A%09A%3A%5Bhttps%3A%2F%2Fwww.mass.gov%2Fdoc%2Ftrial-court-list-of-court-connected-approved-programs-for-alternative-dispute-resolution%2F%5DThe+Commonwealth+has+published+%3Cb%3Ea+PDF+directory%3C%2Fb%3E+of+Massachusetts+court-connected+mediation+and+arbitration+services+by+county.%0D%0A%09A%3A%5Bhttps%3A%2F%2Fwww.mass.gov%2Ffiles%2Fdocuments%2F2016%2F08%2Fpq%2Fccadr0601large.pdf%2F%5DThe+Commonwealth+has+published+%3Cb%3Ea+helpful+PDF+guide%3C%2Fb%3E+on+how+to+approach+alternative+dispute+resolution.%0D%0AA%3A+Lawyer+referral+services%0D%0A%09Q%28referral%29%3A+Many+law+associations+make+referrals+to+lawyers+or+other+resources+that+specialize+in+the+area+of+law+related+to+your+specific+situation.%0D%0A%09A%3ABoston+Bar+Association+Lawyer+Referral+Service%0D%0A%09%09Q%28BBA%29%3AThe+BBA+Lawyer+Referral+Service+makes+referrals+to+lawyers+or+other+resources+that+specialize+in+the+area+of+law+related+to+your+specific+situation.%0D%0A%09%09A%3A%5Bhttps%3A%2F%2Fbostonbarlawyer.org%2F%5DGo+to+their+website.%0D%0A%09%09A%3A+Return+to+the+main+menu.%0D%0A%09%09%09Q%28BBAmenu%29%3AGOTO%3Amain%0D%0A%09A%3AMassachusetts+Bar+Association+Lawyer+Referral+Service%0D%0A%09%09Q%28MBA%29%3AThe+Massachusetts+Bar+Association%27s+Lawyer+Referral+Service+is+one+of+the+largest+legal+referral+services+in+the+nation.+If+you+are+buying%2Fselling+a+home%2C+starting+a+business%2C+going+through+a+divorce+or+need+a+will%2C+you+may+need+to+hire+the+right+attorney+to+answer+your+questions+and+help+resolve+your+legal+problems.%0D%0A%09%09A%3A%5Bhttps%3A%2F%2Fwww.masslawhelp.com%2F%5DGo+to+their+website.%0D%0A%09%09A%3A+Return+to+the+main+menu.%0D%0A%09%09%09Q%28MBAmenu%29%3AGOTO%3Amain%0D%0A%09A%3AMassLegalHelp%0D%0A%09%09Q%28MLH%29%3AMassLegalHelp+offers+online+resources+with+clear+instructions+and+many+sample+forms%2C+letters%2C+and+documents.%0D%0A%09%09A%3A%5Bhttps%3A%2F%2Fwww.masslegalhelp.org%2F%5DGo+to+their+website.%0D%0A%09%09A%3A+Return+to+main+menu.%0D%0A%09%09%09Q%28MLHmenu%29%3AGOTO%3Amain%0D%0A%09A%3AGreater+Boston+Legal+Services%0D%0A%09%09Q%28GBLS%29%3AGBLS+provides+free+civil+%28non-criminal%29+legal+assistance+to+low-income+people+in+Boston+and+thirty-one+additional+cities+and+towns.+They+offer+a+range+of+services+from+legal+advice+to+full+case+representation%2C+depending+on+client+need.+%0D%0A%09%09A%3A%5Bhttps%3A%2F%2Fgbls.org%2F%5DGo+to+their+website.%0D%0A%09%09A%3AReturn+to+main+menu.%0D%0A%09%09%09Q%28GBLSmenu%29%3AGOTO%3Amain%0D%0A%09A%3AHarvard+Legal+Aid+Bureau%0D%0A%09%09Q%28HLAB%29%3AHLAB%2C+a+clinic+run+by+Harvard+Law+School+students%2C+provides+free+civil+legal+services+to+low-income+individuals+in+the+Greater+Boston+area.%0D%0A%09%09A%3A%5Bhttps%3A%2F%2Fwww.harvardlegalaid.org%2F%5DGo+to+their+website.%0D%0A%09%09A%3AReturn+to+main+menu.%0D%0A%09%09%09Q%28HLABmenu%29%3AGOTO%3Amain%0D%0AA%3A+Return+to+main+menu%0D%0A%09Q%28resourcesmenu%29%3AGOTO%3Amain%0D%0A%0D%0A%0D%0AQ%28history%29%3A+SCAS+was+founded+in+1973+as+a+subcommittee+of+the+Phillips+Brooks+House+Legal+Committee.+The+first+SCAS+volunteers+worked+out+of+the+Roxbury+Courthouse%2C+helping+clients+prepare+for+their+cases+by+informing+them+of+their+rights.+Originally%2C+SCAS+was+no+more+than+six+students.+Since+that+time%2C+SCAS+has+grown+considerably.+We+now+have+over+100+active+volunteers+helping+the+citizens+of+Massachusetts+navigate+the+small+claims+system+directly+by+phone+and+by+appointment%2C+and+indirectly+by+advocating+structural+%28i.e.+legislative%29+change.%0D%0AA%3A+Our+mission%0D%0A%09Q%28mission%29%3A+The+Small+Claims+Advisory+Service+is+the+only+organization+in+Massachusetts+that+focuses+primarily+on+helping+individuals+navigate+the+small+claims+court+system+in+the+Commonwealth.+Our+mission+is+to+empower+socioeconomically+disadvantaged+people+in+order+for+them+to+seek+legal+redress+effectively+through+the+small+claims+system%2C+and+to+protect+their+rights+as+consumers%2C+tenants%2C+and+members+of+our+community.+Often%2C+these+individuals+are+unaware+of+their+options+without+our+help.+We+provide+citizens+with+information+on+Massachusetts+law%2C+small+claims+procedure%2C+and+effective+court+presentations.%0D%0A%09A%3A+Our+history%0D%0A%09%09Q%28aboutmore%29%3AGOTO%3Ahistory%0D%0A%09A%3A+Return+to+main+menu.%0D%0A%09%09Q%28missionreturn%29%3AGOTO%3Amain%0D%0AA%3A+Return+to+main+menu.%0D%0A%09Q%28aboutreturn%29%3AGOTO%3Amain%0D%0A%0D%0A</div><div id="ondeck" name="ondeck"><div id='Q-1' name='Q-1' style='display:none;'> Hi there! I'm the Harvard SCAS Chatbot, a resource directory of Massachusetts small claims information.<br><br>What can I help you with today?
+
+</div><div id='Q-1.1' name='Q-1.1' style='display:none;'> Have you...
+</div><div id='Q-1.1.1' name='Q-1.1.1' style='display:none;'> Is this person/business located in Massachusetts?
+</div><div id='Q-1.1.1.1' name='Q-1.1.1.1' style='display:none;'> What would you like to know about the claims process?
+</div><div id='Q-1.1.1.1.1' name='Q-1.1.1.1.1' style='display:none;'> First, send a "demand letter" to the person you want to sue–preferably typed. Include a chronology (or account) of what happened. Be as specific as you can, and mention dates, specific contracts, or interactions. Secondly, include the amount of money that the defendant owes you. Lastly, include a statement that informs the reader that "If you do not fulfill this request within 30 days, I intend to sue in small claims court." If the other party does not respond within 30 days, then you should begin the small claims process.
+</div><div id='Q-1.1.1.1.1.1' name='Q-1.1.1.1.1.1' style='display:none;'> <a href="https://drive.google.com/file/d/1i_IxX_9kNtpHTm_F6T_jlBISaVfrsMzk/view?usp=sharing">Click here</a> to access an example demand letter. Demand letters are generally not required, but can be useful to organize your case.
+</div><div id='Q-1.1.1.1.1.1.1' name='Q-1.1.1.1.1.1.1' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.1.1.2' name='Q-1.1.1.1.1.1.2' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.1.2' name='Q-1.1.1.1.1.2' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.1.3' name='Q-1.1.1.1.1.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.2' name='Q-1.1.1.1.2' style='display:none;'> If your claim is $500 or less, it costs $40 to file.<br>If your claim is $500.01 to $2,000.00, it costs $50 to file.<br>If your claim is $2,000.01 to $5,000.00, it costs $100 to file.<br>If your claim is $5,000.01 to $7,000.00, it costs $150 to file.<br>
+You can usually recover this filing fee — there is a field on the small claims filing form for that. However, that decision is up to the clerk magistrate.
+</div><div id='Q-1.1.1.1.2.1' name='Q-1.1.1.1.2.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.1.1.2.2' name='Q-1.1.1.1.2.2' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.2.3' name='Q-1.1.1.1.2.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.3' name='Q-1.1.1.1.3' style='display:none;'>Use the courthouse that serves the city in which you live or work or where the defendant lives or works. It’s recommended that you go to the court where the defendant is located so it is easier to enforce a judgment if you win the case. If you choose a court near yourself, you will have to file a different form in the court near the defendant, and it will cost money to file.
+</div><div id='Q-1.1.1.1.3.1' name='Q-1.1.1.1.3.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.1.1.3.2' name='Q-1.1.1.1.3.2' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.3.3' name='Q-1.1.1.1.3.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.4' name='Q-1.1.1.1.4' style='display:none;'>GOTO:1.1.3.2</div><div id='Q-1.1.1.1.5' name='Q-1.1.1.1.5' style='display:none;'>GOTO:3</div><div id='Q-1.1.1.2' name='Q-1.1.1.2' style='display:none;'>The Massachusetts "Long-Arm Statute" allows plaintiffs to sue parties who are out-of-state as long as they do business in Massachusetts, possesses property in Massachusetts, or contracts/supplies services in Massachusetts. If the party profits from business in Massachusetts and their action/lack of action also causes substantial damage in Massachusetts, then they also may be sued.
+</div><div id='Q-1.1.1.2.1' name='Q-1.1.1.2.1' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.2.2' name='Q-1.1.1.2.2' style='display:none;'>GOTO:2</div><div id='Q-1.1.1.2.3' name='Q-1.1.1.2.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.2' name='Q-1.1.2' style='display:none;'> The judge should set up a payment hearing (either on the day of the hearing, or at a later date) for the debtor and the creditor to set up a payment agreement. If you did not file in a courthouse near the defendant’s workplace or residence, you will have to file a supplementary process application at a court in one of those two areas.
+</div><div id='Q-1.1.2.1' name='Q-1.1.2.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.2.2' name='Q-1.1.2.2' style='display:none;'>GOTO:2</div><div id='Q-1.1.2.3' name='Q-1.1.2.3' style='display:none;'>GOTO:3</div><div id='Q-1.1.2.4' name='Q-1.1.2.4' style='display:none;'>GOTO:1</div><div id='Q-1.1.3' name='Q-1.1.3' style='display:none;'> What would you like to know?
+</div><div id='Q-1.1.3.1' name='Q-1.1.3.1' style='display:none;'>Yes. If you do not show up in court, the plaintiff (whoever is suing you) will automatically win the case. Being in court allows you to tell your side of the story and ask for a settlement that will be more beneficial for you.
+</div><div id='Q-1.1.3.1.1' name='Q-1.1.3.1.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.3.1.2' name='Q-1.1.3.1.2' style='display:none;'>GOTO:1</div><div id='Q-1.1.3.2' name='Q-1.1.3.2' style='display:none;'>While we cannot say whether or not you will win your case, a good guide to what to present to the clerk magistrate is as follows:<br>- A brief overview of the conflict.<br>- A more detailed chronology of what happened. Be sure to be organized, clear, and concise; bring along evidence such as receipts, call records, or pictures that might help your case.<br>- What you’ve already done to try to solve the problem.<br>- What the law says should happen.<br>- A suggestion for how much you are owed.
+</div><div id='Q-1.1.3.2.1' name='Q-1.1.3.2.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.3.2.2' name='Q-1.1.3.2.2' style='display:none;'>GOTO:1</div><div id='Q-1.1.3.3' name='Q-1.1.3.3' style='display:none;'>GOTO:1</div><div id='Q-1.2' name='Q-1.2' style='display:none;'> Under Chapter 93A of Massachusetts General Law, you can sue for double or triple damages, meaning that if the business owes you $100, you are entitled to sue them for $200 or $300. Mentioning Chapter 93A and double/triple damages in the demand letter would also be helpful.
+</div><div id='Q-1.2.1' name='Q-1.2.1' style='display:none;'>GOTO:1.1.1.1.1</div><div id='Q-1.2.2' name='Q-1.2.2' style='display:none;'>GOTO:3</div><div id='Q-1.2.3' name='Q-1.2.3' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.3' name='Q-1.3' style='display:none;'>GOTO:3</div><div id='Q-1.4' name='Q-1.4' style='display:none;'> The Small Claims Advisory Service is a part of the Phillips Brooks House Association, a student-run public service organization affiliated with Harvard College.
+</div><div id='Q-1.4.1' name='Q-1.4.1' style='display:none;'>GOTO:4</div><div id='Q-1.4.2' name='Q-1.4.2' style='display:none;'>GOTO:4.1</div><div id='Q-1.5' name='Q-1.5' style='display:none;'>GOTO:2</div><div id='Q-2' name='Q-2' style='display:none;'> We can help! Would you like to contact us by email or phone?
+</div><div id='Q-2.1' name='Q-2.1' style='display:none;'> You can email SCAS directly at <b><a href="mailto:masmallclaims@gmail.com">masmallclaims@gmail.com</a>.</b> You can also send a transcript of today's chat by clicking the button below. A volunteer will get back to you within 48 hours.
+</div><div id='Q-2.1.1' name='Q-2.1.1' style='display:none;'> Please enter a short description of your remaining legal issue:
+</div><div id='Q-2.1.1.1' name='Q-2.1.1.1' style='display:none;'>Thanks! Click below to send your transcript.
+</div><div id='Q-2.1.1.1.1' name='Q-2.1.1.1.1' style='display:none;'>GOTO:1</div><div id='Q-2.1.2' name='Q-2.1.2' style='display:none;'>GOTO:1</div><div id='Q-2.2' name='Q-2.2' style='display:none;'> You can call a SCAS volunteer at <b>(833) 365-7227</b>. If prompted, please leave us a message and a volunteer will try to return your call within 48 hours.
+</div><div id='Q-2.2.1' name='Q-2.2.1' style='display:none;'>GOTO:1</div><div id='Q-3' name='Q-3' style='display:none;'> Below are useful resources on Massachusetts laws, rules and fees, forms, and recommended sources. Click below to be directed to a subject page:
+</div><div id='Q-3.2' name='Q-3.2' style='display:none;'>Small Claims Resources
+</div><div id='Q-3.4' name='Q-3.4' style='display:none;'> Alternative Dispute Resolution Services
+</div><div id='Q-3.5' name='Q-3.5' style='display:none;'> Many law associations make referrals to lawyers or other resources that specialize in the area of law related to your specific situation.
+</div><div id='Q-3.5.1' name='Q-3.5.1' style='display:none;'>The BBA Lawyer Referral Service makes referrals to lawyers or other resources that specialize in the area of law related to your specific situation.
+</div><div id='Q-3.5.1.2' name='Q-3.5.1.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.2' name='Q-3.5.2' style='display:none;'>The Massachusetts Bar Association's Lawyer Referral Service is one of the largest legal referral services in the nation. If you are buying/selling a home, starting a business, going through a divorce or need a will, you may need to hire the right attorney to answer your questions and help resolve your legal problems.
+</div><div id='Q-3.5.2.2' name='Q-3.5.2.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.3' name='Q-3.5.3' style='display:none;'>MassLegalHelp offers online resources with clear instructions and many sample forms, letters, and documents.
+</div><div id='Q-3.5.3.2' name='Q-3.5.3.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.4' name='Q-3.5.4' style='display:none;'>GBLS provides free civil (non-criminal) legal assistance to low-income people in Boston and thirty-one additional cities and towns. They offer a range of services from legal advice to full case representation, depending on client need. 
+</div><div id='Q-3.5.4.2' name='Q-3.5.4.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.5' name='Q-3.5.5' style='display:none;'>HLAB, a clinic run by Harvard Law School students, provides free civil legal services to low-income individuals in the Greater Boston area.
+</div><div id='Q-3.5.5.2' name='Q-3.5.5.2' style='display:none;'>GOTO:1</div><div id='Q-3.6' name='Q-3.6' style='display:none;'>GOTO:1</div><div id='Q-4' name='Q-4' style='display:none;'> SCAS was founded in 1973 as a subcommittee of the Phillips Brooks House Legal Committee. The first SCAS volunteers worked out of the Roxbury Courthouse, helping clients prepare for their cases by informing them of their rights. Originally, SCAS was no more than six students. Since that time, SCAS has grown considerably. We now have over 100 active volunteers helping the citizens of Massachusetts navigate the small claims system directly by phone and by appointment, and indirectly by advocating structural (i.e. legislative) change.
+</div><div id='Q-4.1' name='Q-4.1' style='display:none;'> The Small Claims Advisory Service is the only organization in Massachusetts that focuses primarily on helping individuals navigate the small claims court system in the Commonwealth. Our mission is to empower socioeconomically disadvantaged people in order for them to seek legal redress effectively through the small claims system, and to protect their rights as consumers, tenants, and members of our community. Often, these individuals are unaware of their options without our help. We provide citizens with information on Massachusetts law, small claims procedure, and effective court presentations.
+</div><div id='Q-4.1.1' name='Q-4.1.1' style='display:none;'>GOTO:4</div><div id='Q-4.1.2' name='Q-4.1.2' style='display:none;'>GOTO:1</div><div id='Q-4.2' name='Q-4.2' style='display:none;'>GOTO:1</div><div id='A-1.1' name='A-1.1' style='display:none;'> Filing a small claim 
+</div><div id='A-href-1.1' name='A-href-1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1' name='A-target-1.1' style='display:none;'></div><div id='X-1.1' name='X-1.1' style='display:none;'>Filing a small claim</div><div id='A-1.1.1' name='A-1.1.1' style='display:none;'> Been wronged and want to sue.
+</div><div id='A-href-1.1.1' name='A-href-1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1' name='A-target-1.1.1' style='display:none;'></div><div id='X-1.1.1' name='X-1.1.1' style='display:none;'>Been wronged and want to sue.</div><div id='A-1.1.1.1' name='A-1.1.1.1' style='display:none;'> Yes.
+</div><div id='A-href-1.1.1.1' name='A-href-1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1' name='A-target-1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1' name='X-1.1.1.1' style='display:none;'>Yes.</div><div id='A-1.1.1.1.1' name='A-1.1.1.1.1' style='display:none;'> How do I get started?
+</div><div id='A-href-1.1.1.1.1' name='A-href-1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1' name='A-target-1.1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1.1' name='X-1.1.1.1.1' style='display:none;'>How do I get started?</div><div id='A-1.1.1.1.1.1' name='A-1.1.1.1.1.1' style='display:none;'> I'd like help drafting this letter.
+</div><div id='A-href-1.1.1.1.1.1' name='A-href-1.1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.1' name='A-target-1.1.1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1.1.1' name='X-1.1.1.1.1.1' style='display:none;'>I'd like help drafting this letter.</div><div id='A-1.1.1.1.1.1.1' name='A-1.1.1.1.1.1.1' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.1.1.1' name='A-href-1.1.1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.1.1' name='A-target-1.1.1.1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1.1.1.1' name='X-1.1.1.1.1.1.1' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.1.1.2' name='A-1.1.1.1.1.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.1.1.2' name='A-href-1.1.1.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.1.2' name='A-target-1.1.1.1.1.1.2' style='display:none;'></div><div id='X-1.1.1.1.1.1.2' name='X-1.1.1.1.1.1.2' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.1.2' name='A-1.1.1.1.1.2' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.1.2' name='A-href-1.1.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.2' name='A-target-1.1.1.1.1.2' style='display:none;'></div><div id='X-1.1.1.1.1.2' name='X-1.1.1.1.1.2' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.1.3' name='A-1.1.1.1.1.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.1.3' name='A-href-1.1.1.1.1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.3' name='A-target-1.1.1.1.1.3' style='display:none;'></div><div id='X-1.1.1.1.1.3' name='X-1.1.1.1.1.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.2' name='A-1.1.1.1.2' style='display:none;'> How much will this cost?
+</div><div id='A-href-1.1.1.1.2' name='A-href-1.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2' name='A-target-1.1.1.1.2' style='display:none;'></div><div id='X-1.1.1.1.2' name='X-1.1.1.1.2' style='display:none;'>How much will this cost?</div><div id='A-1.1.1.1.2.1' name='A-1.1.1.1.2.1' style='display:none;'> I'd like more help.
+</div><div id='A-href-1.1.1.1.2.1' name='A-href-1.1.1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2.1' name='A-target-1.1.1.1.2.1' style='display:none;'></div><div id='X-1.1.1.1.2.1' name='X-1.1.1.1.2.1' style='display:none;'>I'd like more help.</div><div id='A-1.1.1.1.2.2' name='A-1.1.1.1.2.2' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.2.2' name='A-href-1.1.1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2.2' name='A-target-1.1.1.1.2.2' style='display:none;'></div><div id='X-1.1.1.1.2.2' name='X-1.1.1.1.2.2' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.2.3' name='A-1.1.1.1.2.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.2.3' name='A-href-1.1.1.1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2.3' name='A-target-1.1.1.1.2.3' style='display:none;'></div><div id='X-1.1.1.1.2.3' name='X-1.1.1.1.2.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.3' name='A-1.1.1.1.3' style='display:none;'> Where do I sue?
+</div><div id='A-href-1.1.1.1.3' name='A-href-1.1.1.1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3' name='A-target-1.1.1.1.3' style='display:none;'></div><div id='X-1.1.1.1.3' name='X-1.1.1.1.3' style='display:none;'>Where do I sue?</div><div id='A-1.1.1.1.3.1' name='A-1.1.1.1.3.1' style='display:none;'> I'd like more help.
+</div><div id='A-href-1.1.1.1.3.1' name='A-href-1.1.1.1.3.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3.1' name='A-target-1.1.1.1.3.1' style='display:none;'></div><div id='X-1.1.1.1.3.1' name='X-1.1.1.1.3.1' style='display:none;'>I'd like more help.</div><div id='A-1.1.1.1.3.2' name='A-1.1.1.1.3.2' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.3.2' name='A-href-1.1.1.1.3.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3.2' name='A-target-1.1.1.1.3.2' style='display:none;'></div><div id='X-1.1.1.1.3.2' name='X-1.1.1.1.3.2' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.3.3' name='A-1.1.1.1.3.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.3.3' name='A-href-1.1.1.1.3.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3.3' name='A-target-1.1.1.1.3.3' style='display:none;'></div><div id='X-1.1.1.1.3.3' name='X-1.1.1.1.3.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.4' name='A-1.1.1.1.4' style='display:none;'> What do I say in court?
+</div><div id='A-href-1.1.1.1.4' name='A-href-1.1.1.1.4' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.4' name='A-target-1.1.1.1.4' style='display:none;'></div><div id='X-1.1.1.1.4' name='X-1.1.1.1.4' style='display:none;'>What do I say in court?</div><div id='A-1.1.1.1.5' name='A-1.1.1.1.5' style='display:none;'> Where can I find resources on filing a claims?
+</div><div id='A-href-1.1.1.1.5' name='A-href-1.1.1.1.5' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.5' name='A-target-1.1.1.1.5' style='display:none;'></div><div id='X-1.1.1.1.5' name='X-1.1.1.1.5' style='display:none;'>Where can I find resources on filing a claims?</div><div id='A-1.1.1.2' name='A-1.1.1.2' style='display:none;'> No.
+</div><div id='A-href-1.1.1.2' name='A-href-1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2' name='A-target-1.1.1.2' style='display:none;'></div><div id='X-1.1.1.2' name='X-1.1.1.2' style='display:none;'>No.</div><div id='A-1.1.1.2.1' name='A-1.1.1.2.1' style='display:none;'> I'd like information on beginning a claim.
+</div><div id='A-href-1.1.1.2.1' name='A-href-1.1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2.1' name='A-target-1.1.1.2.1' style='display:none;'></div><div id='X-1.1.1.2.1' name='X-1.1.1.2.1' style='display:none;'>I'd like information on beginning a claim.</div><div id='A-1.1.1.2.2' name='A-1.1.1.2.2' style='display:none;'> I'm not sure if my situation meets the above criteria.
+</div><div id='A-href-1.1.1.2.2' name='A-href-1.1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2.2' name='A-target-1.1.1.2.2' style='display:none;'></div><div id='X-1.1.1.2.2' name='X-1.1.1.2.2' style='display:none;'>I'm not sure if my situation meets the above criteria.</div><div id='A-1.1.1.2.3' name='A-1.1.1.2.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.2.3' name='A-href-1.1.1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2.3' name='A-target-1.1.1.2.3' style='display:none;'></div><div id='X-1.1.1.2.3' name='X-1.1.1.2.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.2' name='A-1.1.2' style='display:none;'> Won your case and want to get your money back.
+</div><div id='A-href-1.1.2' name='A-href-1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2' name='A-target-1.1.2' style='display:none;'></div><div id='X-1.1.2' name='X-1.1.2' style='display:none;'>Won your case and want to get your money back.</div><div id='A-1.1.2.1' name='A-1.1.2.1' style='display:none;'> I'm not sure when/where my payment hearing is.
+</div><div id='A-href-1.1.2.1' name='A-href-1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1' name='A-target-1.1.2.1' style='display:none;'></div><div id='X-1.1.2.1' name='X-1.1.2.1' style='display:none;'>I'm not sure when/where my payment hearing is.</div><div id='A-1.1.2.2' name='A-1.1.2.2' style='display:none;'> I'd like help filing a supplementary process application.
+</div><div id='A-href-1.1.2.2' name='A-href-1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.2' name='A-target-1.1.2.2' style='display:none;'></div><div id='X-1.1.2.2' name='X-1.1.2.2' style='display:none;'>I'd like help filing a supplementary process application.</div><div id='A-1.1.2.3' name='A-1.1.2.3' style='display:none;'> I need more help.
+</div><div id='A-href-1.1.2.3' name='A-href-1.1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.3' name='A-target-1.1.2.3' style='display:none;'></div><div id='X-1.1.2.3' name='X-1.1.2.3' style='display:none;'>I need more help.</div><div id='A-1.1.2.4' name='A-1.1.2.4' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.2.4' name='A-href-1.1.2.4' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.4' name='A-target-1.1.2.4' style='display:none;'></div><div id='X-1.1.2.4' name='X-1.1.2.4' style='display:none;'>Return to main menu.</div><div id='A-1.1.3' name='A-1.1.3' style='display:none;'> Been sued and need guidance.
+</div><div id='A-href-1.1.3' name='A-href-1.1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3' name='A-target-1.1.3' style='display:none;'></div><div id='X-1.1.3' name='X-1.1.3' style='display:none;'>Been sued and need guidance.</div><div id='A-1.1.3.1' name='A-1.1.3.1' style='display:none;'> Do I need to show up to court?
+</div><div id='A-href-1.1.3.1' name='A-href-1.1.3.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.1' name='A-target-1.1.3.1' style='display:none;'></div><div id='X-1.1.3.1' name='X-1.1.3.1' style='display:none;'>Do I need to show up to court?</div><div id='A-1.1.3.1.1' name='A-1.1.3.1.1' style='display:none;'> I'd like more guidance.
+</div><div id='A-href-1.1.3.1.1' name='A-href-1.1.3.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.1.1' name='A-target-1.1.3.1.1' style='display:none;'></div><div id='X-1.1.3.1.1' name='X-1.1.3.1.1' style='display:none;'>I'd like more guidance.</div><div id='A-1.1.3.1.2' name='A-1.1.3.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.3.1.2' name='A-href-1.1.3.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.1.2' name='A-target-1.1.3.1.2' style='display:none;'></div><div id='X-1.1.3.1.2' name='X-1.1.3.1.2' style='display:none;'>Return to main menu.</div><div id='A-1.1.3.2' name='A-1.1.3.2' style='display:none;'> What do I say to win my case?
+</div><div id='A-href-1.1.3.2' name='A-href-1.1.3.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.2' name='A-target-1.1.3.2' style='display:none;'></div><div id='X-1.1.3.2' name='X-1.1.3.2' style='display:none;'>What do I say to win my case?</div><div id='A-1.1.3.2.1' name='A-1.1.3.2.1' style='display:none;'> I'd like more guidance.
+</div><div id='A-href-1.1.3.2.1' name='A-href-1.1.3.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.2.1' name='A-target-1.1.3.2.1' style='display:none;'></div><div id='X-1.1.3.2.1' name='X-1.1.3.2.1' style='display:none;'>I'd like more guidance.</div><div id='A-1.1.3.2.2' name='A-1.1.3.2.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.3.2.2' name='A-href-1.1.3.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.2.2' name='A-target-1.1.3.2.2' style='display:none;'></div><div id='X-1.1.3.2.2' name='X-1.1.3.2.2' style='display:none;'>Return to main menu.</div><div id='A-1.1.3.3' name='A-1.1.3.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.3.3' name='A-href-1.1.3.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.3' name='A-target-1.1.3.3' style='display:none;'></div><div id='X-1.1.3.3' name='X-1.1.3.3' style='display:none;'>Return to main menu.</div><div id='A-1.2' name='A-1.2' style='display:none;'> Consumer protection law
+</div><div id='A-href-1.2' name='A-href-1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.2' name='A-target-1.2' style='display:none;'></div><div id='X-1.2' name='X-1.2' style='display:none;'>Consumer protection law</div><div id='A-1.2.1' name='A-1.2.1' style='display:none;'> I'd like to know more about drafting a demand letter.
+</div><div id='A-href-1.2.1' name='A-href-1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.2.1' name='A-target-1.2.1' style='display:none;'></div><div id='X-1.2.1' name='X-1.2.1' style='display:none;'>I'd like to know more about drafting a demand letter.</div><div id='A-1.2.2' name='A-1.2.2' style='display:none;'> I'd like to know more about Chapter 93A.
+</div><div id='A-href-1.2.2' name='A-href-1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.2.2' name='A-target-1.2.2' style='display:none;'></div><div id='X-1.2.2' name='X-1.2.2' style='display:none;'>I'd like to know more about Chapter 93A.</div><div id='A-1.2.3' name='A-1.2.3' style='display:none;'> I'd like to know more about filing a claim.
+</div><div id='A-href-1.2.3' name='A-href-1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.2.3' name='A-target-1.2.3' style='display:none;'></div><div id='X-1.2.3' name='X-1.2.3' style='display:none;'>I'd like to know more about filing a claim.</div><div id='A-1.3' name='A-1.3' style='display:none;'> Online resources bank
+</div><div id='A-href-1.3' name='A-href-1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.3' name='A-target-1.3' style='display:none;'></div><div id='X-1.3' name='X-1.3' style='display:none;'>Online resources bank</div><div id='A-1.4' name='A-1.4' style='display:none;'> About SCAS
+</div><div id='A-href-1.4' name='A-href-1.4' style='display:none;'>javascript:void('');</div><div id='A-target-1.4' name='A-target-1.4' style='display:none;'></div><div id='X-1.4' name='X-1.4' style='display:none;'>About SCAS</div><div id='A-1.4.1' name='A-1.4.1' style='display:none;'> Our history
+</div><div id='A-href-1.4.1' name='A-href-1.4.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.4.1' name='A-target-1.4.1' style='display:none;'></div><div id='X-1.4.1' name='X-1.4.1' style='display:none;'>Our history</div><div id='A-1.4.2' name='A-1.4.2' style='display:none;'> Our mission
+</div><div id='A-href-1.4.2' name='A-href-1.4.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.4.2' name='A-target-1.4.2' style='display:none;'></div><div id='X-1.4.2' name='X-1.4.2' style='display:none;'>Our mission</div><div id='A-1.5' name='A-1.5' style='display:none;'> Contact us
+</div><div id='A-href-1.5' name='A-href-1.5' style='display:none;'>javascript:void('');</div><div id='A-target-1.5' name='A-target-1.5' style='display:none;'></div><div id='X-1.5' name='X-1.5' style='display:none;'>Contact us</div><div id='A-2.1' name='A-2.1' style='display:none;'> Email
+</div><div id='A-href-2.1' name='A-href-2.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1' name='A-target-2.1' style='display:none;'></div><div id='X-2.1' name='X-2.1' style='display:none;'>Email</div><div id='A-2.1.1' name='A-2.1.1' style='display:none;'> Email my transcript.
+</div><div id='A-href-2.1.1' name='A-href-2.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1' name='A-target-2.1.1' style='display:none;'></div><div id='X-2.1.1' name='X-2.1.1' style='display:none;'>Email my transcript.</div><div id='A-2.1.1.1' name='A-2.1.1.1' style='display:none;'><variable></div><div id='A-href-2.1.1.1' name='A-href-2.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1.1' name='A-target-2.1.1.1' style='display:none;'>text</div><div id='X-2.1.1.1' name='X-2.1.1.1' style='display:none;'>2.1.1.1</div><div id='A-2.1.1.1.1' name='A-2.1.1.1.1' style='display:none;'> Email my transcript.
+</div><div id='A-href-2.1.1.1.1' name='A-href-2.1.1.1.1' style='display:none;'>javascript:mail2('masmallclaims@gmail.com','SCASbot Transcript',transcript());</div><div id='A-target-2.1.1.1.1' name='A-target-2.1.1.1.1' style='display:none;'></div><div id='X-2.1.1.1.1' name='X-2.1.1.1.1' style='display:none;'>Email my transcript.</div><div id='A-2.1.1.1.1.1' name='A-2.1.1.1.1.1' style='display:none;'> Return to main menu.
+</div><div id='A-href-2.1.1.1.1.1' name='A-href-2.1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1.1.1.1' name='A-target-2.1.1.1.1.1' style='display:none;'></div><div id='X-2.1.1.1.1.1' name='X-2.1.1.1.1.1' style='display:none;'>Return to main menu.</div><div id='A-2.1.2' name='A-2.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-2.1.2' name='A-href-2.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.2' name='A-target-2.1.2' style='display:none;'></div><div id='X-2.1.2' name='X-2.1.2' style='display:none;'>Return to main menu.</div><div id='A-2.2' name='A-2.2' style='display:none;'> Phone
+</div><div id='A-href-2.2' name='A-href-2.2' style='display:none;'>javascript:void('');</div><div id='A-target-2.2' name='A-target-2.2' style='display:none;'></div><div id='X-2.2' name='X-2.2' style='display:none;'>Phone</div><div id='A-2.2.1' name='A-2.2.1' style='display:none;'> Return to main menu.
+</div><div id='A-href-2.2.1' name='A-href-2.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.2.1' name='A-target-2.2.1' style='display:none;'></div><div id='X-2.2.1' name='X-2.2.1' style='display:none;'>Return to main menu.</div><div id='A-2.3' name='A-2.3' style='display:none;'>Visit our website at <b>masmallclaims.org</b>
+
+</div><div id='A-href-2.3' name='A-href-2.3' style='display:none;'>https://www.masmallclaims.org/</div><div id='A-target-2.3' name='A-target-2.3' style='display:none;'>target="_blank" i="https://www.masmallclaims.org/"</div><div id='X-2.3' name='X-2.3' style='display:none;'>Visit our website at <b>masmallclaims.org</b></div><div id='A-3.1' name='A-3.1' style='display:none;'>Mass.gov Courts Self-Help
+</div><div id='A-href-3.1' name='A-href-3.1' style='display:none;'>https://www.mass.gov/topics/courts-self-help</div><div id='A-target-3.1' name='A-target-3.1' style='display:none;'>target="_blank" i="https://www.mass.gov/topics/courts-self-help"</div><div id='X-3.1' name='X-3.1' style='display:none;'>Mass.gov Courts Self-Help</div><div id='A-3.2' name='A-3.2' style='display:none;'>Small claims
+</div><div id='A-href-3.2' name='A-href-3.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.2' name='A-target-3.2' style='display:none;'></div><div id='X-3.2' name='X-3.2' style='display:none;'>Small claims</div><div id='A-3.2.1' name='A-3.2.1' style='display:none;'>Mass.gov General Information
+</div><div id='A-href-3.2.1' name='A-href-3.2.1' style='display:none;'>https://www.mass.gov/small-claims</div><div id='A-target-3.2.1' name='A-target-3.2.1' style='display:none;'>target="_blank" i="https://www.mass.gov/small-claims"</div><div id='X-3.2.1' name='X-3.2.1' style='display:none;'>Mass.gov General Information</div><div id='A-3.2.2' name='A-3.2.2' style='display:none;'>Small Claims Standards
+</div><div id='A-href-3.2.2' name='A-href-3.2.2' style='display:none;'>https://www.mass.gov/lists/small-claims-court-forms</div><div id='A-target-3.2.2' name='A-target-3.2.2' style='display:none;'>target="_blank" i="https://www.mass.gov/lists/small-claims-court-forms"</div><div id='X-3.2.2' name='X-3.2.2' style='display:none;'>Small Claims Standards</div><div id='A-3.3' name='A-3.3' style='display:none;'>Chapter 93A (unfair or deceptive acts/practices by businesses
+</div><div id='A-href-3.3' name='A-href-3.3' style='display:none;'>https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXV/Chapter93A</div><div id='A-target-3.3' name='A-target-3.3' style='display:none;'>target="_blank" i="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXV/Chapter93A"</div><div id='X-3.3' name='X-3.3' style='display:none;'>Chapter 93A (unfair or deceptive acts/practices by businesses</div><div id='A-3.4' name='A-3.4' style='display:none;'> Alternative dispute resolution services
+</div><div id='A-href-3.4' name='A-href-3.4' style='display:none;'>javascript:void('');</div><div id='A-target-3.4' name='A-target-3.4' style='display:none;'></div><div id='X-3.4' name='X-3.4' style='display:none;'>Alternative dispute resolution services</div><div id='A-3.4.1' name='A-3.4.1' style='display:none;'>The <b>Harvard Mediation Program</b> is run by the Harvard Law School and provides trained mediators for disputes.
+</div><div id='A-href-3.4.1' name='A-href-3.4.1' style='display:none;'>https://clinics.law.harvard.edu/hmp/</div><div id='A-target-3.4.1' name='A-target-3.4.1' style='display:none;'>target="_blank" i="https://clinics.law.harvard.edu/hmp/"</div><div id='X-3.4.1' name='X-3.4.1' style='display:none;'>The <b>Harvard Mediation Program</b> is run by the Harvard Law School and provides trained mediators for disputes.</div><div id='A-3.4.2' name='A-3.4.2' style='display:none;'>The Commonwealth has published <b>a PDF directory</b> of Massachusetts court-connected mediation and arbitration services by county.
+</div><div id='A-href-3.4.2' name='A-href-3.4.2' style='display:none;'>https://www.mass.gov/doc/trial-court-list-of-court-connected-approved-programs-for-alternative-dispute-resolution/</div><div id='A-target-3.4.2' name='A-target-3.4.2' style='display:none;'>target="_blank" i="https://www.mass.gov/doc/trial-court-list-of-court-connected-approved-programs-for-alternative-dispute-resolution/"</div><div id='X-3.4.2' name='X-3.4.2' style='display:none;'>The Commonwealth has published <b>a PDF directory</b> of Massachusetts court-connected mediation and arbitration services by county.</div><div id='A-3.4.3' name='A-3.4.3' style='display:none;'>The Commonwealth has published <b>a helpful PDF guide</b> on how to approach alternative dispute resolution.
+</div><div id='A-href-3.4.3' name='A-href-3.4.3' style='display:none;'>https://www.mass.gov/files/documents/2016/08/pq/ccadr0601large.pdf/</div><div id='A-target-3.4.3' name='A-target-3.4.3' style='display:none;'>target="_blank" i="https://www.mass.gov/files/documents/2016/08/pq/ccadr0601large.pdf/"</div><div id='X-3.4.3' name='X-3.4.3' style='display:none;'>The Commonwealth has published <b>a helpful PDF guide</b> on how to approach alternative dispute resolution.</div><div id='A-3.5' name='A-3.5' style='display:none;'> Lawyer referral services
+</div><div id='A-href-3.5' name='A-href-3.5' style='display:none;'>javascript:void('');</div><div id='A-target-3.5' name='A-target-3.5' style='display:none;'></div><div id='X-3.5' name='X-3.5' style='display:none;'>Lawyer referral services</div><div id='A-3.5.1' name='A-3.5.1' style='display:none;'>Boston Bar Association Lawyer Referral Service
+</div><div id='A-href-3.5.1' name='A-href-3.5.1' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.1' name='A-target-3.5.1' style='display:none;'></div><div id='X-3.5.1' name='X-3.5.1' style='display:none;'>Boston Bar Association Lawyer Referral Service</div><div id='A-3.5.1.1' name='A-3.5.1.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.1.1' name='A-href-3.5.1.1' style='display:none;'>https://bostonbarlawyer.org/</div><div id='A-target-3.5.1.1' name='A-target-3.5.1.1' style='display:none;'>target="_blank" i="https://bostonbarlawyer.org/"</div><div id='X-3.5.1.1' name='X-3.5.1.1' style='display:none;'>Go to their website.</div><div id='A-3.5.1.2' name='A-3.5.1.2' style='display:none;'> Return to the main menu.
+</div><div id='A-href-3.5.1.2' name='A-href-3.5.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.1.2' name='A-target-3.5.1.2' style='display:none;'></div><div id='X-3.5.1.2' name='X-3.5.1.2' style='display:none;'>Return to the main menu.</div><div id='A-3.5.2' name='A-3.5.2' style='display:none;'>Massachusetts Bar Association Lawyer Referral Service
+</div><div id='A-href-3.5.2' name='A-href-3.5.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.2' name='A-target-3.5.2' style='display:none;'></div><div id='X-3.5.2' name='X-3.5.2' style='display:none;'>Massachusetts Bar Association Lawyer Referral Service</div><div id='A-3.5.2.1' name='A-3.5.2.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.2.1' name='A-href-3.5.2.1' style='display:none;'>https://www.masslawhelp.com/</div><div id='A-target-3.5.2.1' name='A-target-3.5.2.1' style='display:none;'>target="_blank" i="https://www.masslawhelp.com/"</div><div id='X-3.5.2.1' name='X-3.5.2.1' style='display:none;'>Go to their website.</div><div id='A-3.5.2.2' name='A-3.5.2.2' style='display:none;'> Return to the main menu.
+</div><div id='A-href-3.5.2.2' name='A-href-3.5.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.2.2' name='A-target-3.5.2.2' style='display:none;'></div><div id='X-3.5.2.2' name='X-3.5.2.2' style='display:none;'>Return to the main menu.</div><div id='A-3.5.3' name='A-3.5.3' style='display:none;'>MassLegalHelp
+</div><div id='A-href-3.5.3' name='A-href-3.5.3' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.3' name='A-target-3.5.3' style='display:none;'></div><div id='X-3.5.3' name='X-3.5.3' style='display:none;'>MassLegalHelp</div><div id='A-3.5.3.1' name='A-3.5.3.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.3.1' name='A-href-3.5.3.1' style='display:none;'>https://www.masslegalhelp.org/</div><div id='A-target-3.5.3.1' name='A-target-3.5.3.1' style='display:none;'>target="_blank" i="https://www.masslegalhelp.org/"</div><div id='X-3.5.3.1' name='X-3.5.3.1' style='display:none;'>Go to their website.</div><div id='A-3.5.3.2' name='A-3.5.3.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-3.5.3.2' name='A-href-3.5.3.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.3.2' name='A-target-3.5.3.2' style='display:none;'></div><div id='X-3.5.3.2' name='X-3.5.3.2' style='display:none;'>Return to main menu.</div><div id='A-3.5.4' name='A-3.5.4' style='display:none;'>Greater Boston Legal Services
+</div><div id='A-href-3.5.4' name='A-href-3.5.4' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.4' name='A-target-3.5.4' style='display:none;'></div><div id='X-3.5.4' name='X-3.5.4' style='display:none;'>Greater Boston Legal Services</div><div id='A-3.5.4.1' name='A-3.5.4.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.4.1' name='A-href-3.5.4.1' style='display:none;'>https://gbls.org/</div><div id='A-target-3.5.4.1' name='A-target-3.5.4.1' style='display:none;'>target="_blank" i="https://gbls.org/"</div><div id='X-3.5.4.1' name='X-3.5.4.1' style='display:none;'>Go to their website.</div><div id='A-3.5.4.2' name='A-3.5.4.2' style='display:none;'>Return to main menu.
+</div><div id='A-href-3.5.4.2' name='A-href-3.5.4.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.4.2' name='A-target-3.5.4.2' style='display:none;'></div><div id='X-3.5.4.2' name='X-3.5.4.2' style='display:none;'>Return to main menu.</div><div id='A-3.5.5' name='A-3.5.5' style='display:none;'>Harvard Legal Aid Bureau
+</div><div id='A-href-3.5.5' name='A-href-3.5.5' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.5' name='A-target-3.5.5' style='display:none;'></div><div id='X-3.5.5' name='X-3.5.5' style='display:none;'>Harvard Legal Aid Bureau</div><div id='A-3.5.5.1' name='A-3.5.5.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.5.1' name='A-href-3.5.5.1' style='display:none;'>https://www.harvardlegalaid.org/</div><div id='A-target-3.5.5.1' name='A-target-3.5.5.1' style='display:none;'>target="_blank" i="https://www.harvardlegalaid.org/"</div><div id='X-3.5.5.1' name='X-3.5.5.1' style='display:none;'>Go to their website.</div><div id='A-3.5.5.2' name='A-3.5.5.2' style='display:none;'>Return to main menu.
+</div><div id='A-href-3.5.5.2' name='A-href-3.5.5.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.5.2' name='A-target-3.5.5.2' style='display:none;'></div><div id='X-3.5.5.2' name='X-3.5.5.2' style='display:none;'>Return to main menu.</div><div id='A-3.6' name='A-3.6' style='display:none;'> Return to main menu
+</div><div id='A-href-3.6' name='A-href-3.6' style='display:none;'>javascript:void('');</div><div id='A-target-3.6' name='A-target-3.6' style='display:none;'></div><div id='X-3.6' name='X-3.6' style='display:none;'>Return to main menu</div><div id='A-4.1' name='A-4.1' style='display:none;'> Our mission
+</div><div id='A-href-4.1' name='A-href-4.1' style='display:none;'>javascript:void('');</div><div id='A-target-4.1' name='A-target-4.1' style='display:none;'></div><div id='X-4.1' name='X-4.1' style='display:none;'>Our mission</div><div id='A-4.1.1' name='A-4.1.1' style='display:none;'> Our history
+</div><div id='A-href-4.1.1' name='A-href-4.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-4.1.1' name='A-target-4.1.1' style='display:none;'></div><div id='X-4.1.1' name='X-4.1.1' style='display:none;'>Our history</div><div id='A-4.1.2' name='A-4.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-4.1.2' name='A-href-4.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-4.1.2' name='A-target-4.1.2' style='display:none;'></div><div id='X-4.1.2' name='X-4.1.2' style='display:none;'>Return to main menu.</div><div id='A-4.2' name='A-4.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-4.2' name='A-href-4.2' style='display:none;'>javascript:void('');</div><div id='A-target-4.2' name='A-target-4.2' style='display:none;'></div><div id='X-4.2' name='X-4.2' style='display:none;'>Return to main menu.</div>
+<script>
+	var QVnames = [['1','main'],['1.1','claimstart'],['1.1.1','instate'],['1.1.1.1','claims'],['1.1.1.1.1','demand'],['1.1.1.1.1.1','demandhelp'],['1.1.1.1.1.1.1','demandhelpq'],['1.1.1.1.1.1.2','demandhelpmenu'],['1.1.1.1.1.2','demandq'],['1.1.1.1.1.3','demandmenu'],['1.1.1.1.2','cost'],['1.1.1.1.2.1','costhelp'],['1.1.1.1.2.2','costq'],['1.1.1.1.2.3','costmenu'],['1.1.1.1.3','wheresue'],['1.1.1.1.3.1','wheresuehelp'],['1.1.1.1.3.2','wheresueq'],['1.1.1.1.3.3','wheresuemain'],['1.1.1.1.4','saycourt'],['1.1.1.1.5','claimsresources'],['1.1.1.2','oos'],['1.1.1.2.1','oosclaims'],['1.1.1.2.2','ooshelp'],['1.1.1.2.3','oosmain'],['1.1.2','won'],['1.1.2.1','wonhearing'],['1.1.2.2','wonapplication'],['1.1.2.3','wonhelp'],['1.1.2.4','wonmenu'],['1.1.3','sued'],['1.1.3.1','showup'],['1.1.3.1.1','showuphelp'],['1.1.3.1.2','showupmenu'],['1.1.3.2','court'],['1.1.3.2.1','courthelp'],['1.1.3.2.2','courtmenu'],['1.1.3.3','suedmenu'],['1.2','business'],['1.2.1','businesssdemand'],['1.2.2','businessresources'],['1.2.3','businessclaim'],['1.3','ref'],['1.4','about'],['1.4.1','abouthistory'],['1.4.2','aboutmission'],['1.5','contact'],['2','help'],['2.1','email'],['2.1.1','body'],['2.1.1.1','send'],['2.1.1.1.1','emailreturn'],['2.1.2','ereturn'],['2.2','phone'],['2.2.1','preturn'],['3','resources'],['3.2','resourcesclaims'],['3.4','resourcesADR'],['3.5','referral'],['3.5.1','BBA'],['3.5.1.2','BBAmenu'],['3.5.2','MBA'],['3.5.2.2','MBAmenu'],['3.5.3','MLH'],['3.5.3.2','MLHmenu'],['3.5.4','GBLS'],['3.5.4.2','GBLSmenu'],['3.5.5','HLAB'],['3.5.5.2','HLABmenu'],['3.6','resourcesmenu'],['4','history'],['4.1','mission'],['4.1.1','aboutmore'],['4.1.2','missionreturn'],['4.2','aboutreturn']];
+</script>
+</div><textarea id="original" name="original" style="display:none;" disabled="disabled"><div id='Q-1' name='Q-1' style='display:none;'> Hi there! I'm the Harvard SCAS Chatbot, a resource directory of Massachusetts small claims information.<br><br>What can I help you with today?
+
+</div><div id='Q-1.1' name='Q-1.1' style='display:none;'> Have you...
+</div><div id='Q-1.1.1' name='Q-1.1.1' style='display:none;'> Is this person/business located in Massachusetts?
+</div><div id='Q-1.1.1.1' name='Q-1.1.1.1' style='display:none;'> What would you like to know about the claims process?
+</div><div id='Q-1.1.1.1.1' name='Q-1.1.1.1.1' style='display:none;'> First, send a "demand letter" to the person you want to sue–preferably typed. Include a chronology (or account) of what happened. Be as specific as you can, and mention dates, specific contracts, or interactions. Secondly, include the amount of money that the defendant owes you. Lastly, include a statement that informs the reader that "If you do not fulfill this request within 30 days, I intend to sue in small claims court." If the other party does not respond within 30 days, then you should begin the small claims process.
+</div><div id='Q-1.1.1.1.1.1' name='Q-1.1.1.1.1.1' style='display:none;'> <a href="https://drive.google.com/file/d/1i_IxX_9kNtpHTm_F6T_jlBISaVfrsMzk/view?usp=sharing">Click here</a> to access an example demand letter. Demand letters are generally not required, but can be useful to organize your case.
+</div><div id='Q-1.1.1.1.1.1.1' name='Q-1.1.1.1.1.1.1' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.1.1.2' name='Q-1.1.1.1.1.1.2' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.1.2' name='Q-1.1.1.1.1.2' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.1.3' name='Q-1.1.1.1.1.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.2' name='Q-1.1.1.1.2' style='display:none;'> If your claim is $500 or less, it costs $40 to file.<br>If your claim is $500.01 to $2,000.00, it costs $50 to file.<br>If your claim is $2,000.01 to $5,000.00, it costs $100 to file.<br>If your claim is $5,000.01 to $7,000.00, it costs $150 to file.<br>
+You can usually recover this filing fee — there is a field on the small claims filing form for that. However, that decision is up to the clerk magistrate.
+</div><div id='Q-1.1.1.1.2.1' name='Q-1.1.1.1.2.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.1.1.2.2' name='Q-1.1.1.1.2.2' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.2.3' name='Q-1.1.1.1.2.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.3' name='Q-1.1.1.1.3' style='display:none;'>Use the courthouse that serves the city in which you live or work or where the defendant lives or works. It’s recommended that you go to the court where the defendant is located so it is easier to enforce a judgment if you win the case. If you choose a court near yourself, you will have to file a different form in the court near the defendant, and it will cost money to file.
+</div><div id='Q-1.1.1.1.3.1' name='Q-1.1.1.1.3.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.1.1.3.2' name='Q-1.1.1.1.3.2' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.1.3.3' name='Q-1.1.1.1.3.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.1.1.4' name='Q-1.1.1.1.4' style='display:none;'>GOTO:1.1.3.2</div><div id='Q-1.1.1.1.5' name='Q-1.1.1.1.5' style='display:none;'>GOTO:3</div><div id='Q-1.1.1.2' name='Q-1.1.1.2' style='display:none;'>The Massachusetts "Long-Arm Statute" allows plaintiffs to sue parties who are out-of-state as long as they do business in Massachusetts, possesses property in Massachusetts, or contracts/supplies services in Massachusetts. If the party profits from business in Massachusetts and their action/lack of action also causes substantial damage in Massachusetts, then they also may be sued.
+</div><div id='Q-1.1.1.2.1' name='Q-1.1.1.2.1' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.1.1.2.2' name='Q-1.1.1.2.2' style='display:none;'>GOTO:2</div><div id='Q-1.1.1.2.3' name='Q-1.1.1.2.3' style='display:none;'>GOTO:1</div><div id='Q-1.1.2' name='Q-1.1.2' style='display:none;'> The judge should set up a payment hearing (either on the day of the hearing, or at a later date) for the debtor and the creditor to set up a payment agreement. If you did not file in a courthouse near the defendant’s workplace or residence, you will have to file a supplementary process application at a court in one of those two areas.
+</div><div id='Q-1.1.2.1' name='Q-1.1.2.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.2.2' name='Q-1.1.2.2' style='display:none;'>GOTO:2</div><div id='Q-1.1.2.3' name='Q-1.1.2.3' style='display:none;'>GOTO:3</div><div id='Q-1.1.2.4' name='Q-1.1.2.4' style='display:none;'>GOTO:1</div><div id='Q-1.1.3' name='Q-1.1.3' style='display:none;'> What would you like to know?
+</div><div id='Q-1.1.3.1' name='Q-1.1.3.1' style='display:none;'>Yes. If you do not show up in court, the plaintiff (whoever is suing you) will automatically win the case. Being in court allows you to tell your side of the story and ask for a settlement that will be more beneficial for you.
+</div><div id='Q-1.1.3.1.1' name='Q-1.1.3.1.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.3.1.2' name='Q-1.1.3.1.2' style='display:none;'>GOTO:1</div><div id='Q-1.1.3.2' name='Q-1.1.3.2' style='display:none;'>While we cannot say whether or not you will win your case, a good guide to what to present to the clerk magistrate is as follows:<br>- A brief overview of the conflict.<br>- A more detailed chronology of what happened. Be sure to be organized, clear, and concise; bring along evidence such as receipts, call records, or pictures that might help your case.<br>- What you’ve already done to try to solve the problem.<br>- What the law says should happen.<br>- A suggestion for how much you are owed.
+</div><div id='Q-1.1.3.2.1' name='Q-1.1.3.2.1' style='display:none;'>GOTO:2</div><div id='Q-1.1.3.2.2' name='Q-1.1.3.2.2' style='display:none;'>GOTO:1</div><div id='Q-1.1.3.3' name='Q-1.1.3.3' style='display:none;'>GOTO:1</div><div id='Q-1.2' name='Q-1.2' style='display:none;'> Under Chapter 93A of Massachusetts General Law, you can sue for double or triple damages, meaning that if the business owes you $100, you are entitled to sue them for $200 or $300. Mentioning Chapter 93A and double/triple damages in the demand letter would also be helpful.
+</div><div id='Q-1.2.1' name='Q-1.2.1' style='display:none;'>GOTO:1.1.1.1.1</div><div id='Q-1.2.2' name='Q-1.2.2' style='display:none;'>GOTO:3</div><div id='Q-1.2.3' name='Q-1.2.3' style='display:none;'>GOTO:1.1.1.1</div><div id='Q-1.3' name='Q-1.3' style='display:none;'>GOTO:3</div><div id='Q-1.4' name='Q-1.4' style='display:none;'> The Small Claims Advisory Service is a part of the Phillips Brooks House Association, a student-run public service organization affiliated with Harvard College.
+</div><div id='Q-1.4.1' name='Q-1.4.1' style='display:none;'>GOTO:4</div><div id='Q-1.4.2' name='Q-1.4.2' style='display:none;'>GOTO:4.1</div><div id='Q-1.5' name='Q-1.5' style='display:none;'>GOTO:2</div><div id='Q-2' name='Q-2' style='display:none;'> We can help! Would you like to contact us by email or phone?
+</div><div id='Q-2.1' name='Q-2.1' style='display:none;'> You can email SCAS directly at <b><a href="mailto:masmallclaims@gmail.com">masmallclaims@gmail.com</a>.</b> You can also send a transcript of today's chat by clicking the button below. A volunteer will get back to you within 48 hours.
+</div><div id='Q-2.1.1' name='Q-2.1.1' style='display:none;'> Please enter a short description of your remaining legal issue:
+</div><div id='Q-2.1.1.1' name='Q-2.1.1.1' style='display:none;'>Thanks! Click below to send your transcript.
+</div><div id='Q-2.1.1.1.1' name='Q-2.1.1.1.1' style='display:none;'>GOTO:1</div><div id='Q-2.1.2' name='Q-2.1.2' style='display:none;'>GOTO:1</div><div id='Q-2.2' name='Q-2.2' style='display:none;'> You can call a SCAS volunteer at <b>(833) 365-7227</b>. If prompted, please leave us a message and a volunteer will try to return your call within 48 hours.
+</div><div id='Q-2.2.1' name='Q-2.2.1' style='display:none;'>GOTO:1</div><div id='Q-3' name='Q-3' style='display:none;'> Below are useful resources on Massachusetts laws, rules and fees, forms, and recommended sources. Click below to be directed to a subject page:
+</div><div id='Q-3.2' name='Q-3.2' style='display:none;'>Small Claims Resources
+</div><div id='Q-3.4' name='Q-3.4' style='display:none;'> Alternative Dispute Resolution Services
+</div><div id='Q-3.5' name='Q-3.5' style='display:none;'> Many law associations make referrals to lawyers or other resources that specialize in the area of law related to your specific situation.
+</div><div id='Q-3.5.1' name='Q-3.5.1' style='display:none;'>The BBA Lawyer Referral Service makes referrals to lawyers or other resources that specialize in the area of law related to your specific situation.
+</div><div id='Q-3.5.1.2' name='Q-3.5.1.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.2' name='Q-3.5.2' style='display:none;'>The Massachusetts Bar Association's Lawyer Referral Service is one of the largest legal referral services in the nation. If you are buying/selling a home, starting a business, going through a divorce or need a will, you may need to hire the right attorney to answer your questions and help resolve your legal problems.
+</div><div id='Q-3.5.2.2' name='Q-3.5.2.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.3' name='Q-3.5.3' style='display:none;'>MassLegalHelp offers online resources with clear instructions and many sample forms, letters, and documents.
+</div><div id='Q-3.5.3.2' name='Q-3.5.3.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.4' name='Q-3.5.4' style='display:none;'>GBLS provides free civil (non-criminal) legal assistance to low-income people in Boston and thirty-one additional cities and towns. They offer a range of services from legal advice to full case representation, depending on client need. 
+</div><div id='Q-3.5.4.2' name='Q-3.5.4.2' style='display:none;'>GOTO:1</div><div id='Q-3.5.5' name='Q-3.5.5' style='display:none;'>HLAB, a clinic run by Harvard Law School students, provides free civil legal services to low-income individuals in the Greater Boston area.
+</div><div id='Q-3.5.5.2' name='Q-3.5.5.2' style='display:none;'>GOTO:1</div><div id='Q-3.6' name='Q-3.6' style='display:none;'>GOTO:1</div><div id='Q-4' name='Q-4' style='display:none;'> SCAS was founded in 1973 as a subcommittee of the Phillips Brooks House Legal Committee. The first SCAS volunteers worked out of the Roxbury Courthouse, helping clients prepare for their cases by informing them of their rights. Originally, SCAS was no more than six students. Since that time, SCAS has grown considerably. We now have over 100 active volunteers helping the citizens of Massachusetts navigate the small claims system directly by phone and by appointment, and indirectly by advocating structural (i.e. legislative) change.
+</div><div id='Q-4.1' name='Q-4.1' style='display:none;'> The Small Claims Advisory Service is the only organization in Massachusetts that focuses primarily on helping individuals navigate the small claims court system in the Commonwealth. Our mission is to empower socioeconomically disadvantaged people in order for them to seek legal redress effectively through the small claims system, and to protect their rights as consumers, tenants, and members of our community. Often, these individuals are unaware of their options without our help. We provide citizens with information on Massachusetts law, small claims procedure, and effective court presentations.
+</div><div id='Q-4.1.1' name='Q-4.1.1' style='display:none;'>GOTO:4</div><div id='Q-4.1.2' name='Q-4.1.2' style='display:none;'>GOTO:1</div><div id='Q-4.2' name='Q-4.2' style='display:none;'>GOTO:1</div><div id='A-1.1' name='A-1.1' style='display:none;'> Filing a small claim 
+</div><div id='A-href-1.1' name='A-href-1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1' name='A-target-1.1' style='display:none;'></div><div id='X-1.1' name='X-1.1' style='display:none;'>Filing a small claim</div><div id='A-1.1.1' name='A-1.1.1' style='display:none;'> Been wronged and want to sue.
+</div><div id='A-href-1.1.1' name='A-href-1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1' name='A-target-1.1.1' style='display:none;'></div><div id='X-1.1.1' name='X-1.1.1' style='display:none;'>Been wronged and want to sue.</div><div id='A-1.1.1.1' name='A-1.1.1.1' style='display:none;'> Yes.
+</div><div id='A-href-1.1.1.1' name='A-href-1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1' name='A-target-1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1' name='X-1.1.1.1' style='display:none;'>Yes.</div><div id='A-1.1.1.1.1' name='A-1.1.1.1.1' style='display:none;'> How do I get started?
+</div><div id='A-href-1.1.1.1.1' name='A-href-1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1' name='A-target-1.1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1.1' name='X-1.1.1.1.1' style='display:none;'>How do I get started?</div><div id='A-1.1.1.1.1.1' name='A-1.1.1.1.1.1' style='display:none;'> I'd like help drafting this letter.
+</div><div id='A-href-1.1.1.1.1.1' name='A-href-1.1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.1' name='A-target-1.1.1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1.1.1' name='X-1.1.1.1.1.1' style='display:none;'>I'd like help drafting this letter.</div><div id='A-1.1.1.1.1.1.1' name='A-1.1.1.1.1.1.1' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.1.1.1' name='A-href-1.1.1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.1.1' name='A-target-1.1.1.1.1.1.1' style='display:none;'></div><div id='X-1.1.1.1.1.1.1' name='X-1.1.1.1.1.1.1' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.1.1.2' name='A-1.1.1.1.1.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.1.1.2' name='A-href-1.1.1.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.1.2' name='A-target-1.1.1.1.1.1.2' style='display:none;'></div><div id='X-1.1.1.1.1.1.2' name='X-1.1.1.1.1.1.2' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.1.2' name='A-1.1.1.1.1.2' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.1.2' name='A-href-1.1.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.2' name='A-target-1.1.1.1.1.2' style='display:none;'></div><div id='X-1.1.1.1.1.2' name='X-1.1.1.1.1.2' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.1.3' name='A-1.1.1.1.1.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.1.3' name='A-href-1.1.1.1.1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.1.3' name='A-target-1.1.1.1.1.3' style='display:none;'></div><div id='X-1.1.1.1.1.3' name='X-1.1.1.1.1.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.2' name='A-1.1.1.1.2' style='display:none;'> How much will this cost?
+</div><div id='A-href-1.1.1.1.2' name='A-href-1.1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2' name='A-target-1.1.1.1.2' style='display:none;'></div><div id='X-1.1.1.1.2' name='X-1.1.1.1.2' style='display:none;'>How much will this cost?</div><div id='A-1.1.1.1.2.1' name='A-1.1.1.1.2.1' style='display:none;'> I'd like more help.
+</div><div id='A-href-1.1.1.1.2.1' name='A-href-1.1.1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2.1' name='A-target-1.1.1.1.2.1' style='display:none;'></div><div id='X-1.1.1.1.2.1' name='X-1.1.1.1.2.1' style='display:none;'>I'd like more help.</div><div id='A-1.1.1.1.2.2' name='A-1.1.1.1.2.2' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.2.2' name='A-href-1.1.1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2.2' name='A-target-1.1.1.1.2.2' style='display:none;'></div><div id='X-1.1.1.1.2.2' name='X-1.1.1.1.2.2' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.2.3' name='A-1.1.1.1.2.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.2.3' name='A-href-1.1.1.1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.2.3' name='A-target-1.1.1.1.2.3' style='display:none;'></div><div id='X-1.1.1.1.2.3' name='X-1.1.1.1.2.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.3' name='A-1.1.1.1.3' style='display:none;'> Where do I sue?
+</div><div id='A-href-1.1.1.1.3' name='A-href-1.1.1.1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3' name='A-target-1.1.1.1.3' style='display:none;'></div><div id='X-1.1.1.1.3' name='X-1.1.1.1.3' style='display:none;'>Where do I sue?</div><div id='A-1.1.1.1.3.1' name='A-1.1.1.1.3.1' style='display:none;'> I'd like more help.
+</div><div id='A-href-1.1.1.1.3.1' name='A-href-1.1.1.1.3.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3.1' name='A-target-1.1.1.1.3.1' style='display:none;'></div><div id='X-1.1.1.1.3.1' name='X-1.1.1.1.3.1' style='display:none;'>I'd like more help.</div><div id='A-1.1.1.1.3.2' name='A-1.1.1.1.3.2' style='display:none;'> I have another question regarding claims.
+</div><div id='A-href-1.1.1.1.3.2' name='A-href-1.1.1.1.3.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3.2' name='A-target-1.1.1.1.3.2' style='display:none;'></div><div id='X-1.1.1.1.3.2' name='X-1.1.1.1.3.2' style='display:none;'>I have another question regarding claims.</div><div id='A-1.1.1.1.3.3' name='A-1.1.1.1.3.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.1.3.3' name='A-href-1.1.1.1.3.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.3.3' name='A-target-1.1.1.1.3.3' style='display:none;'></div><div id='X-1.1.1.1.3.3' name='X-1.1.1.1.3.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.1.1.4' name='A-1.1.1.1.4' style='display:none;'> What do I say in court?
+</div><div id='A-href-1.1.1.1.4' name='A-href-1.1.1.1.4' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.4' name='A-target-1.1.1.1.4' style='display:none;'></div><div id='X-1.1.1.1.4' name='X-1.1.1.1.4' style='display:none;'>What do I say in court?</div><div id='A-1.1.1.1.5' name='A-1.1.1.1.5' style='display:none;'> Where can I find resources on filing a claims?
+</div><div id='A-href-1.1.1.1.5' name='A-href-1.1.1.1.5' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.1.5' name='A-target-1.1.1.1.5' style='display:none;'></div><div id='X-1.1.1.1.5' name='X-1.1.1.1.5' style='display:none;'>Where can I find resources on filing a claims?</div><div id='A-1.1.1.2' name='A-1.1.1.2' style='display:none;'> No.
+</div><div id='A-href-1.1.1.2' name='A-href-1.1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2' name='A-target-1.1.1.2' style='display:none;'></div><div id='X-1.1.1.2' name='X-1.1.1.2' style='display:none;'>No.</div><div id='A-1.1.1.2.1' name='A-1.1.1.2.1' style='display:none;'> I'd like information on beginning a claim.
+</div><div id='A-href-1.1.1.2.1' name='A-href-1.1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2.1' name='A-target-1.1.1.2.1' style='display:none;'></div><div id='X-1.1.1.2.1' name='X-1.1.1.2.1' style='display:none;'>I'd like information on beginning a claim.</div><div id='A-1.1.1.2.2' name='A-1.1.1.2.2' style='display:none;'> I'm not sure if my situation meets the above criteria.
+</div><div id='A-href-1.1.1.2.2' name='A-href-1.1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2.2' name='A-target-1.1.1.2.2' style='display:none;'></div><div id='X-1.1.1.2.2' name='X-1.1.1.2.2' style='display:none;'>I'm not sure if my situation meets the above criteria.</div><div id='A-1.1.1.2.3' name='A-1.1.1.2.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.1.2.3' name='A-href-1.1.1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.1.2.3' name='A-target-1.1.1.2.3' style='display:none;'></div><div id='X-1.1.1.2.3' name='X-1.1.1.2.3' style='display:none;'>Return to main menu.</div><div id='A-1.1.2' name='A-1.1.2' style='display:none;'> Won your case and want to get your money back.
+</div><div id='A-href-1.1.2' name='A-href-1.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2' name='A-target-1.1.2' style='display:none;'></div><div id='X-1.1.2' name='X-1.1.2' style='display:none;'>Won your case and want to get your money back.</div><div id='A-1.1.2.1' name='A-1.1.2.1' style='display:none;'> I'm not sure when/where my payment hearing is.
+</div><div id='A-href-1.1.2.1' name='A-href-1.1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.1' name='A-target-1.1.2.1' style='display:none;'></div><div id='X-1.1.2.1' name='X-1.1.2.1' style='display:none;'>I'm not sure when/where my payment hearing is.</div><div id='A-1.1.2.2' name='A-1.1.2.2' style='display:none;'> I'd like help filing a supplementary process application.
+</div><div id='A-href-1.1.2.2' name='A-href-1.1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.2' name='A-target-1.1.2.2' style='display:none;'></div><div id='X-1.1.2.2' name='X-1.1.2.2' style='display:none;'>I'd like help filing a supplementary process application.</div><div id='A-1.1.2.3' name='A-1.1.2.3' style='display:none;'> I need more help.
+</div><div id='A-href-1.1.2.3' name='A-href-1.1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.3' name='A-target-1.1.2.3' style='display:none;'></div><div id='X-1.1.2.3' name='X-1.1.2.3' style='display:none;'>I need more help.</div><div id='A-1.1.2.4' name='A-1.1.2.4' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.2.4' name='A-href-1.1.2.4' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.2.4' name='A-target-1.1.2.4' style='display:none;'></div><div id='X-1.1.2.4' name='X-1.1.2.4' style='display:none;'>Return to main menu.</div><div id='A-1.1.3' name='A-1.1.3' style='display:none;'> Been sued and need guidance.
+</div><div id='A-href-1.1.3' name='A-href-1.1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3' name='A-target-1.1.3' style='display:none;'></div><div id='X-1.1.3' name='X-1.1.3' style='display:none;'>Been sued and need guidance.</div><div id='A-1.1.3.1' name='A-1.1.3.1' style='display:none;'> Do I need to show up to court?
+</div><div id='A-href-1.1.3.1' name='A-href-1.1.3.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.1' name='A-target-1.1.3.1' style='display:none;'></div><div id='X-1.1.3.1' name='X-1.1.3.1' style='display:none;'>Do I need to show up to court?</div><div id='A-1.1.3.1.1' name='A-1.1.3.1.1' style='display:none;'> I'd like more guidance.
+</div><div id='A-href-1.1.3.1.1' name='A-href-1.1.3.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.1.1' name='A-target-1.1.3.1.1' style='display:none;'></div><div id='X-1.1.3.1.1' name='X-1.1.3.1.1' style='display:none;'>I'd like more guidance.</div><div id='A-1.1.3.1.2' name='A-1.1.3.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.3.1.2' name='A-href-1.1.3.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.1.2' name='A-target-1.1.3.1.2' style='display:none;'></div><div id='X-1.1.3.1.2' name='X-1.1.3.1.2' style='display:none;'>Return to main menu.</div><div id='A-1.1.3.2' name='A-1.1.3.2' style='display:none;'> What do I say to win my case?
+</div><div id='A-href-1.1.3.2' name='A-href-1.1.3.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.2' name='A-target-1.1.3.2' style='display:none;'></div><div id='X-1.1.3.2' name='X-1.1.3.2' style='display:none;'>What do I say to win my case?</div><div id='A-1.1.3.2.1' name='A-1.1.3.2.1' style='display:none;'> I'd like more guidance.
+</div><div id='A-href-1.1.3.2.1' name='A-href-1.1.3.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.2.1' name='A-target-1.1.3.2.1' style='display:none;'></div><div id='X-1.1.3.2.1' name='X-1.1.3.2.1' style='display:none;'>I'd like more guidance.</div><div id='A-1.1.3.2.2' name='A-1.1.3.2.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.3.2.2' name='A-href-1.1.3.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.2.2' name='A-target-1.1.3.2.2' style='display:none;'></div><div id='X-1.1.3.2.2' name='X-1.1.3.2.2' style='display:none;'>Return to main menu.</div><div id='A-1.1.3.3' name='A-1.1.3.3' style='display:none;'> Return to main menu.
+</div><div id='A-href-1.1.3.3' name='A-href-1.1.3.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.1.3.3' name='A-target-1.1.3.3' style='display:none;'></div><div id='X-1.1.3.3' name='X-1.1.3.3' style='display:none;'>Return to main menu.</div><div id='A-1.2' name='A-1.2' style='display:none;'> Consumer protection law
+</div><div id='A-href-1.2' name='A-href-1.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.2' name='A-target-1.2' style='display:none;'></div><div id='X-1.2' name='X-1.2' style='display:none;'>Consumer protection law</div><div id='A-1.2.1' name='A-1.2.1' style='display:none;'> I'd like to know more about drafting a demand letter.
+</div><div id='A-href-1.2.1' name='A-href-1.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.2.1' name='A-target-1.2.1' style='display:none;'></div><div id='X-1.2.1' name='X-1.2.1' style='display:none;'>I'd like to know more about drafting a demand letter.</div><div id='A-1.2.2' name='A-1.2.2' style='display:none;'> I'd like to know more about Chapter 93A.
+</div><div id='A-href-1.2.2' name='A-href-1.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.2.2' name='A-target-1.2.2' style='display:none;'></div><div id='X-1.2.2' name='X-1.2.2' style='display:none;'>I'd like to know more about Chapter 93A.</div><div id='A-1.2.3' name='A-1.2.3' style='display:none;'> I'd like to know more about filing a claim.
+</div><div id='A-href-1.2.3' name='A-href-1.2.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.2.3' name='A-target-1.2.3' style='display:none;'></div><div id='X-1.2.3' name='X-1.2.3' style='display:none;'>I'd like to know more about filing a claim.</div><div id='A-1.3' name='A-1.3' style='display:none;'> Online resources bank
+</div><div id='A-href-1.3' name='A-href-1.3' style='display:none;'>javascript:void('');</div><div id='A-target-1.3' name='A-target-1.3' style='display:none;'></div><div id='X-1.3' name='X-1.3' style='display:none;'>Online resources bank</div><div id='A-1.4' name='A-1.4' style='display:none;'> About SCAS
+</div><div id='A-href-1.4' name='A-href-1.4' style='display:none;'>javascript:void('');</div><div id='A-target-1.4' name='A-target-1.4' style='display:none;'></div><div id='X-1.4' name='X-1.4' style='display:none;'>About SCAS</div><div id='A-1.4.1' name='A-1.4.1' style='display:none;'> Our history
+</div><div id='A-href-1.4.1' name='A-href-1.4.1' style='display:none;'>javascript:void('');</div><div id='A-target-1.4.1' name='A-target-1.4.1' style='display:none;'></div><div id='X-1.4.1' name='X-1.4.1' style='display:none;'>Our history</div><div id='A-1.4.2' name='A-1.4.2' style='display:none;'> Our mission
+</div><div id='A-href-1.4.2' name='A-href-1.4.2' style='display:none;'>javascript:void('');</div><div id='A-target-1.4.2' name='A-target-1.4.2' style='display:none;'></div><div id='X-1.4.2' name='X-1.4.2' style='display:none;'>Our mission</div><div id='A-1.5' name='A-1.5' style='display:none;'> Contact us
+</div><div id='A-href-1.5' name='A-href-1.5' style='display:none;'>javascript:void('');</div><div id='A-target-1.5' name='A-target-1.5' style='display:none;'></div><div id='X-1.5' name='X-1.5' style='display:none;'>Contact us</div><div id='A-2.1' name='A-2.1' style='display:none;'> Email
+</div><div id='A-href-2.1' name='A-href-2.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1' name='A-target-2.1' style='display:none;'></div><div id='X-2.1' name='X-2.1' style='display:none;'>Email</div><div id='A-2.1.1' name='A-2.1.1' style='display:none;'> Email my transcript.
+</div><div id='A-href-2.1.1' name='A-href-2.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1' name='A-target-2.1.1' style='display:none;'></div><div id='X-2.1.1' name='X-2.1.1' style='display:none;'>Email my transcript.</div><div id='A-2.1.1.1' name='A-2.1.1.1' style='display:none;'><variable></div><div id='A-href-2.1.1.1' name='A-href-2.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1.1' name='A-target-2.1.1.1' style='display:none;'>text</div><div id='X-2.1.1.1' name='X-2.1.1.1' style='display:none;'>2.1.1.1</div><div id='A-2.1.1.1.1' name='A-2.1.1.1.1' style='display:none;'> Email my transcript.
+</div><div id='A-href-2.1.1.1.1' name='A-href-2.1.1.1.1' style='display:none;'>javascript:mail2('masmallclaims@gmail.com','SCASbot Transcript',transcript());</div><div id='A-target-2.1.1.1.1' name='A-target-2.1.1.1.1' style='display:none;'></div><div id='X-2.1.1.1.1' name='X-2.1.1.1.1' style='display:none;'>Email my transcript.</div><div id='A-2.1.1.1.1.1' name='A-2.1.1.1.1.1' style='display:none;'> Return to main menu.
+</div><div id='A-href-2.1.1.1.1.1' name='A-href-2.1.1.1.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.1.1.1.1' name='A-target-2.1.1.1.1.1' style='display:none;'></div><div id='X-2.1.1.1.1.1' name='X-2.1.1.1.1.1' style='display:none;'>Return to main menu.</div><div id='A-2.1.2' name='A-2.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-2.1.2' name='A-href-2.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-2.1.2' name='A-target-2.1.2' style='display:none;'></div><div id='X-2.1.2' name='X-2.1.2' style='display:none;'>Return to main menu.</div><div id='A-2.2' name='A-2.2' style='display:none;'> Phone
+</div><div id='A-href-2.2' name='A-href-2.2' style='display:none;'>javascript:void('');</div><div id='A-target-2.2' name='A-target-2.2' style='display:none;'></div><div id='X-2.2' name='X-2.2' style='display:none;'>Phone</div><div id='A-2.2.1' name='A-2.2.1' style='display:none;'> Return to main menu.
+</div><div id='A-href-2.2.1' name='A-href-2.2.1' style='display:none;'>javascript:void('');</div><div id='A-target-2.2.1' name='A-target-2.2.1' style='display:none;'></div><div id='X-2.2.1' name='X-2.2.1' style='display:none;'>Return to main menu.</div><div id='A-2.3' name='A-2.3' style='display:none;'>Visit our website at <b>masmallclaims.org</b>
+
+</div><div id='A-href-2.3' name='A-href-2.3' style='display:none;'>https://www.masmallclaims.org/</div><div id='A-target-2.3' name='A-target-2.3' style='display:none;'>target="_blank" i="https://www.masmallclaims.org/"</div><div id='X-2.3' name='X-2.3' style='display:none;'>Visit our website at <b>masmallclaims.org</b></div><div id='A-3.1' name='A-3.1' style='display:none;'>Mass.gov Courts Self-Help
+</div><div id='A-href-3.1' name='A-href-3.1' style='display:none;'>https://www.mass.gov/topics/courts-self-help</div><div id='A-target-3.1' name='A-target-3.1' style='display:none;'>target="_blank" i="https://www.mass.gov/topics/courts-self-help"</div><div id='X-3.1' name='X-3.1' style='display:none;'>Mass.gov Courts Self-Help</div><div id='A-3.2' name='A-3.2' style='display:none;'>Small claims
+</div><div id='A-href-3.2' name='A-href-3.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.2' name='A-target-3.2' style='display:none;'></div><div id='X-3.2' name='X-3.2' style='display:none;'>Small claims</div><div id='A-3.2.1' name='A-3.2.1' style='display:none;'>Mass.gov General Information
+</div><div id='A-href-3.2.1' name='A-href-3.2.1' style='display:none;'>https://www.mass.gov/small-claims</div><div id='A-target-3.2.1' name='A-target-3.2.1' style='display:none;'>target="_blank" i="https://www.mass.gov/small-claims"</div><div id='X-3.2.1' name='X-3.2.1' style='display:none;'>Mass.gov General Information</div><div id='A-3.2.2' name='A-3.2.2' style='display:none;'>Small Claims Standards
+</div><div id='A-href-3.2.2' name='A-href-3.2.2' style='display:none;'>https://www.mass.gov/lists/small-claims-court-forms</div><div id='A-target-3.2.2' name='A-target-3.2.2' style='display:none;'>target="_blank" i="https://www.mass.gov/lists/small-claims-court-forms"</div><div id='X-3.2.2' name='X-3.2.2' style='display:none;'>Small Claims Standards</div><div id='A-3.3' name='A-3.3' style='display:none;'>Chapter 93A (unfair or deceptive acts/practices by businesses
+</div><div id='A-href-3.3' name='A-href-3.3' style='display:none;'>https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXV/Chapter93A</div><div id='A-target-3.3' name='A-target-3.3' style='display:none;'>target="_blank" i="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXV/Chapter93A"</div><div id='X-3.3' name='X-3.3' style='display:none;'>Chapter 93A (unfair or deceptive acts/practices by businesses</div><div id='A-3.4' name='A-3.4' style='display:none;'> Alternative dispute resolution services
+</div><div id='A-href-3.4' name='A-href-3.4' style='display:none;'>javascript:void('');</div><div id='A-target-3.4' name='A-target-3.4' style='display:none;'></div><div id='X-3.4' name='X-3.4' style='display:none;'>Alternative dispute resolution services</div><div id='A-3.4.1' name='A-3.4.1' style='display:none;'>The <b>Harvard Mediation Program</b> is run by the Harvard Law School and provides trained mediators for disputes.
+</div><div id='A-href-3.4.1' name='A-href-3.4.1' style='display:none;'>https://clinics.law.harvard.edu/hmp/</div><div id='A-target-3.4.1' name='A-target-3.4.1' style='display:none;'>target="_blank" i="https://clinics.law.harvard.edu/hmp/"</div><div id='X-3.4.1' name='X-3.4.1' style='display:none;'>The <b>Harvard Mediation Program</b> is run by the Harvard Law School and provides trained mediators for disputes.</div><div id='A-3.4.2' name='A-3.4.2' style='display:none;'>The Commonwealth has published <b>a PDF directory</b> of Massachusetts court-connected mediation and arbitration services by county.
+</div><div id='A-href-3.4.2' name='A-href-3.4.2' style='display:none;'>https://www.mass.gov/doc/trial-court-list-of-court-connected-approved-programs-for-alternative-dispute-resolution/</div><div id='A-target-3.4.2' name='A-target-3.4.2' style='display:none;'>target="_blank" i="https://www.mass.gov/doc/trial-court-list-of-court-connected-approved-programs-for-alternative-dispute-resolution/"</div><div id='X-3.4.2' name='X-3.4.2' style='display:none;'>The Commonwealth has published <b>a PDF directory</b> of Massachusetts court-connected mediation and arbitration services by county.</div><div id='A-3.4.3' name='A-3.4.3' style='display:none;'>The Commonwealth has published <b>a helpful PDF guide</b> on how to approach alternative dispute resolution.
+</div><div id='A-href-3.4.3' name='A-href-3.4.3' style='display:none;'>https://www.mass.gov/files/documents/2016/08/pq/ccadr0601large.pdf/</div><div id='A-target-3.4.3' name='A-target-3.4.3' style='display:none;'>target="_blank" i="https://www.mass.gov/files/documents/2016/08/pq/ccadr0601large.pdf/"</div><div id='X-3.4.3' name='X-3.4.3' style='display:none;'>The Commonwealth has published <b>a helpful PDF guide</b> on how to approach alternative dispute resolution.</div><div id='A-3.5' name='A-3.5' style='display:none;'> Lawyer referral services
+</div><div id='A-href-3.5' name='A-href-3.5' style='display:none;'>javascript:void('');</div><div id='A-target-3.5' name='A-target-3.5' style='display:none;'></div><div id='X-3.5' name='X-3.5' style='display:none;'>Lawyer referral services</div><div id='A-3.5.1' name='A-3.5.1' style='display:none;'>Boston Bar Association Lawyer Referral Service
+</div><div id='A-href-3.5.1' name='A-href-3.5.1' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.1' name='A-target-3.5.1' style='display:none;'></div><div id='X-3.5.1' name='X-3.5.1' style='display:none;'>Boston Bar Association Lawyer Referral Service</div><div id='A-3.5.1.1' name='A-3.5.1.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.1.1' name='A-href-3.5.1.1' style='display:none;'>https://bostonbarlawyer.org/</div><div id='A-target-3.5.1.1' name='A-target-3.5.1.1' style='display:none;'>target="_blank" i="https://bostonbarlawyer.org/"</div><div id='X-3.5.1.1' name='X-3.5.1.1' style='display:none;'>Go to their website.</div><div id='A-3.5.1.2' name='A-3.5.1.2' style='display:none;'> Return to the main menu.
+</div><div id='A-href-3.5.1.2' name='A-href-3.5.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.1.2' name='A-target-3.5.1.2' style='display:none;'></div><div id='X-3.5.1.2' name='X-3.5.1.2' style='display:none;'>Return to the main menu.</div><div id='A-3.5.2' name='A-3.5.2' style='display:none;'>Massachusetts Bar Association Lawyer Referral Service
+</div><div id='A-href-3.5.2' name='A-href-3.5.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.2' name='A-target-3.5.2' style='display:none;'></div><div id='X-3.5.2' name='X-3.5.2' style='display:none;'>Massachusetts Bar Association Lawyer Referral Service</div><div id='A-3.5.2.1' name='A-3.5.2.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.2.1' name='A-href-3.5.2.1' style='display:none;'>https://www.masslawhelp.com/</div><div id='A-target-3.5.2.1' name='A-target-3.5.2.1' style='display:none;'>target="_blank" i="https://www.masslawhelp.com/"</div><div id='X-3.5.2.1' name='X-3.5.2.1' style='display:none;'>Go to their website.</div><div id='A-3.5.2.2' name='A-3.5.2.2' style='display:none;'> Return to the main menu.
+</div><div id='A-href-3.5.2.2' name='A-href-3.5.2.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.2.2' name='A-target-3.5.2.2' style='display:none;'></div><div id='X-3.5.2.2' name='X-3.5.2.2' style='display:none;'>Return to the main menu.</div><div id='A-3.5.3' name='A-3.5.3' style='display:none;'>MassLegalHelp
+</div><div id='A-href-3.5.3' name='A-href-3.5.3' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.3' name='A-target-3.5.3' style='display:none;'></div><div id='X-3.5.3' name='X-3.5.3' style='display:none;'>MassLegalHelp</div><div id='A-3.5.3.1' name='A-3.5.3.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.3.1' name='A-href-3.5.3.1' style='display:none;'>https://www.masslegalhelp.org/</div><div id='A-target-3.5.3.1' name='A-target-3.5.3.1' style='display:none;'>target="_blank" i="https://www.masslegalhelp.org/"</div><div id='X-3.5.3.1' name='X-3.5.3.1' style='display:none;'>Go to their website.</div><div id='A-3.5.3.2' name='A-3.5.3.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-3.5.3.2' name='A-href-3.5.3.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.3.2' name='A-target-3.5.3.2' style='display:none;'></div><div id='X-3.5.3.2' name='X-3.5.3.2' style='display:none;'>Return to main menu.</div><div id='A-3.5.4' name='A-3.5.4' style='display:none;'>Greater Boston Legal Services
+</div><div id='A-href-3.5.4' name='A-href-3.5.4' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.4' name='A-target-3.5.4' style='display:none;'></div><div id='X-3.5.4' name='X-3.5.4' style='display:none;'>Greater Boston Legal Services</div><div id='A-3.5.4.1' name='A-3.5.4.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.4.1' name='A-href-3.5.4.1' style='display:none;'>https://gbls.org/</div><div id='A-target-3.5.4.1' name='A-target-3.5.4.1' style='display:none;'>target="_blank" i="https://gbls.org/"</div><div id='X-3.5.4.1' name='X-3.5.4.1' style='display:none;'>Go to their website.</div><div id='A-3.5.4.2' name='A-3.5.4.2' style='display:none;'>Return to main menu.
+</div><div id='A-href-3.5.4.2' name='A-href-3.5.4.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.4.2' name='A-target-3.5.4.2' style='display:none;'></div><div id='X-3.5.4.2' name='X-3.5.4.2' style='display:none;'>Return to main menu.</div><div id='A-3.5.5' name='A-3.5.5' style='display:none;'>Harvard Legal Aid Bureau
+</div><div id='A-href-3.5.5' name='A-href-3.5.5' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.5' name='A-target-3.5.5' style='display:none;'></div><div id='X-3.5.5' name='X-3.5.5' style='display:none;'>Harvard Legal Aid Bureau</div><div id='A-3.5.5.1' name='A-3.5.5.1' style='display:none;'>Go to their website.
+</div><div id='A-href-3.5.5.1' name='A-href-3.5.5.1' style='display:none;'>https://www.harvardlegalaid.org/</div><div id='A-target-3.5.5.1' name='A-target-3.5.5.1' style='display:none;'>target="_blank" i="https://www.harvardlegalaid.org/"</div><div id='X-3.5.5.1' name='X-3.5.5.1' style='display:none;'>Go to their website.</div><div id='A-3.5.5.2' name='A-3.5.5.2' style='display:none;'>Return to main menu.
+</div><div id='A-href-3.5.5.2' name='A-href-3.5.5.2' style='display:none;'>javascript:void('');</div><div id='A-target-3.5.5.2' name='A-target-3.5.5.2' style='display:none;'></div><div id='X-3.5.5.2' name='X-3.5.5.2' style='display:none;'>Return to main menu.</div><div id='A-3.6' name='A-3.6' style='display:none;'> Return to main menu
+</div><div id='A-href-3.6' name='A-href-3.6' style='display:none;'>javascript:void('');</div><div id='A-target-3.6' name='A-target-3.6' style='display:none;'></div><div id='X-3.6' name='X-3.6' style='display:none;'>Return to main menu</div><div id='A-4.1' name='A-4.1' style='display:none;'> Our mission
+</div><div id='A-href-4.1' name='A-href-4.1' style='display:none;'>javascript:void('');</div><div id='A-target-4.1' name='A-target-4.1' style='display:none;'></div><div id='X-4.1' name='X-4.1' style='display:none;'>Our mission</div><div id='A-4.1.1' name='A-4.1.1' style='display:none;'> Our history
+</div><div id='A-href-4.1.1' name='A-href-4.1.1' style='display:none;'>javascript:void('');</div><div id='A-target-4.1.1' name='A-target-4.1.1' style='display:none;'></div><div id='X-4.1.1' name='X-4.1.1' style='display:none;'>Our history</div><div id='A-4.1.2' name='A-4.1.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-4.1.2' name='A-href-4.1.2' style='display:none;'>javascript:void('');</div><div id='A-target-4.1.2' name='A-target-4.1.2' style='display:none;'></div><div id='X-4.1.2' name='X-4.1.2' style='display:none;'>Return to main menu.</div><div id='A-4.2' name='A-4.2' style='display:none;'> Return to main menu.
+</div><div id='A-href-4.2' name='A-href-4.2' style='display:none;'>javascript:void('');</div><div id='A-target-4.2' name='A-target-4.2' style='display:none;'></div><div id='X-4.2' name='X-4.2' style='display:none;'>Return to main menu.</div>
+<script>
+	var QVnames = [['1','main'],['1.1','claimstart'],['1.1.1','instate'],['1.1.1.1','claims'],['1.1.1.1.1','demand'],['1.1.1.1.1.1','demandhelp'],['1.1.1.1.1.1.1','demandhelpq'],['1.1.1.1.1.1.2','demandhelpmenu'],['1.1.1.1.1.2','demandq'],['1.1.1.1.1.3','demandmenu'],['1.1.1.1.2','cost'],['1.1.1.1.2.1','costhelp'],['1.1.1.1.2.2','costq'],['1.1.1.1.2.3','costmenu'],['1.1.1.1.3','wheresue'],['1.1.1.1.3.1','wheresuehelp'],['1.1.1.1.3.2','wheresueq'],['1.1.1.1.3.3','wheresuemain'],['1.1.1.1.4','saycourt'],['1.1.1.1.5','claimsresources'],['1.1.1.2','oos'],['1.1.1.2.1','oosclaims'],['1.1.1.2.2','ooshelp'],['1.1.1.2.3','oosmain'],['1.1.2','won'],['1.1.2.1','wonhearing'],['1.1.2.2','wonapplication'],['1.1.2.3','wonhelp'],['1.1.2.4','wonmenu'],['1.1.3','sued'],['1.1.3.1','showup'],['1.1.3.1.1','showuphelp'],['1.1.3.1.2','showupmenu'],['1.1.3.2','court'],['1.1.3.2.1','courthelp'],['1.1.3.2.2','courtmenu'],['1.1.3.3','suedmenu'],['1.2','business'],['1.2.1','businesssdemand'],['1.2.2','businessresources'],['1.2.3','businessclaim'],['1.3','ref'],['1.4','about'],['1.4.1','abouthistory'],['1.4.2','aboutmission'],['1.5','contact'],['2','help'],['2.1','email'],['2.1.1','body'],['2.1.1.1','send'],['2.1.1.1.1','emailreturn'],['2.1.2','ereturn'],['2.2','phone'],['2.2.1','preturn'],['3','resources'],['3.2','resourcesclaims'],['3.4','resourcesADR'],['3.5','referral'],['3.5.1','BBA'],['3.5.1.2','BBAmenu'],['3.5.2','MBA'],['3.5.2.2','MBAmenu'],['3.5.3','MLH'],['3.5.3.2','MLHmenu'],['3.5.4','GBLS'],['3.5.4.2','GBLSmenu'],['3.5.5','HLAB'],['3.5.5.2','HLABmenu'],['3.6','resourcesmenu'],['4','history'],['4.1','mission'],['4.1.1','aboutmore'],['4.1.2','missionreturn'],['4.2','aboutreturn']];
+</script>
+</textarea><textarea id="transcript" name="transcript" style="display:none;" disabled="disabled"></textarea><div style="float:left;width:100%;margin:15px 0 0px 0;border-top: solid 1px #ddd;"><div id=credits class=credits style="display:none;"><div class=credit_text></div></div><p align=center>  <p>
+ <i>The Massachusetts Small Claims Advisory Service is a volunteer service offered by Harvard College undergraduates who have studied small claims law. Volunteers are neither lawyers nor law students. As such, we can give legal information — not legal advice.</i><br><b>You should not rely on this bot as a source of legal information.</b></p>
+  </div>
+</section></p></div></FORM></div></div>
+<script type="text/javascript">
+	var QNum = 0;
+	var Qhtml = "";
+	var Dhtml = "";
+	var label = "";
+	var GOTOfired = 0;
+	var path = [];
+	var doc_bin = [];
+	var convo_bin = [];
+	var freetext = 0;
+	var goingback = 0;
+
+	$("#conversation input").on("keypress", 'form', function (e) {
+    	var code = e.keyCode || e.which;
+    	if (code == 13) {
+        	e.preventDefault();
+        	return false;
+    	}
+	});
+	
+	$('#FORM').on('keyup keypress', function(e) {
+  		var keyCode = e.keyCode || e.which;
+  		if (keyCode === 13) { 
+    		e.preventDefault();
+    		return false;
+  		}
+	});
+
+	function answerQ(lb,restart) {
+		currentQ = label;
+		label = lb;
+		Dhtml = 'D-'+label;
+		Qhtml = 'Q-'+label;
+		var Ahtml = 'A-'+label;
+		var Jhtml = 'J-'+QNum;
+		var Xhtml = 'X-'+label;
+		var Xihtml = 'Xi-'+label;
+		
+		var input_error = 0;
+		if (restart == undefined) {
+			var regexp = new RegExp("\<variable\>");
+			//if (document.getElementById(Xihtml)) {
+			//	console.log("document.getElementById("+Xihtml+").value: "+document.getElementById(Xihtml).value);
+			//} else {
+			//	console.log("NO document.getElementById("+Xihtml+").value: ");
+			//}
+			if (document.getElementById(Ahtml).innerHTML.match(regexp)) {
+				document.getElementById(Xihtml).value = document.getElementById(Xihtml).value.replace(/(^\s*|\s*$)/,"");
+				if (document.getElementById(Xihtml).value == "") {
+					input_error = "Your answer appears to be empty.";
+					label = currentQ;
+				} else {
+					document.getElementById(Xihtml).value = document.getElementById(Xihtml).value.replace(/</g,"<");
+					document.getElementById(Xihtml).value = document.getElementById(Xihtml).value.replace(/>/g,">");
+				}
+			} 
+		}
+			
+		if (input_error != 0) {
+			alert(input_error);
+			document.getElementById(Xihtml).focus();			
+		} else {
+			if (restart == undefined) {
+				//if (document.getElementById(Ahtml).innerHTML!="") {
+					document.getElementById('QandA').innerHTML += "<div id=\"break-at-"+QNum+"\" class='frame'><div class='full'><div class='ans_text'>"+document.getElementById(Ahtml).innerHTML+"</div></div><div class='ans_arrow'></div></div></div></div>";
+				//}
+				// insert answer from button
+				if (document.getElementById(valueis(currentQ))) {
+					document.getElementById(valueis(currentQ)).outerHTML='';
+				}
+				if (document.getElementById(Xihtml)) {
+					document.getElementById('QandA').innerHTML = "<textarea style=\"display:none;\" id=\""+valueis(currentQ)+"\" name=\""+valueis(currentQ)+"\">"+document.getElementById(Xihtml).value+"</textarea>\n" + document.getElementById('QandA').innerHTML				
+				} else {
+					document.getElementById('QandA').innerHTML = "<textarea style=\"display:none;\" id=\""+valueis(currentQ)+"\" name=\""+valueis(currentQ)+"\">"+document.getElementById(Xhtml).innerHTML+"</textarea>\n" + document.getElementById('QandA').innerHTML
+				}
+				if (document.getElementById('QandA').innerHTML.match(regexp)) {
+				 	var duplicatevars = new RegExp("id=\""+document.getElementById(Xhtml).innerHTML+"(.)*"+document.getElementById(Xhtml).innerHTML+"\"","g");
+					document.getElementById('QandA').innerHTML = document.getElementById('QandA').innerHTML.replace(duplicatevars, "");
+					document.getElementById('QandA').innerHTML = document.getElementById('QandA').innerHTML.replace(/\<variable\>(\<\/variable\>)?/, "<input type=hidden id=\""+document.getElementById(Xhtml).innerHTML+"\" name=\""+document.getElementById(Xhtml).innerHTML+"\" value=\""+document.getElementById(Xihtml).value+"\"/>"+document.getElementById(Xihtml).value);
+					//document.getElementById('transcript').value = document.getElementById('transcript').value.replace(/\<variable\>(\<\/variable\>)?/, document.getElementById(Xihtml).value+"\n");
+					var thisvariable = new RegExp("<(X|x)>"+document.getElementById(Xhtml).innerHTML+"<\/(X|x)>","g");
+					//document.getElementById('doc').innerHTML = document.getElementById('doc').innerHTML.replace(thisvariable, document.getElementById(document.getElementById(Xhtml).innerHTML).innerHTML);
+					//document.getElementById('ondeck').innerHTML = document.getElementById('ondeck').innerHTML.replace(thisvariable, document.getElementById(valueis(currentQ)).innerHTML);
+					//console.log("thisvariable: "+thisvariable);
+					//console.log("Variable name: "+valueis(currentQ));
+					//console.log("Variable value: "+document.getElementById(valueis(currentQ)).innerHTML);
+					if(document.getElementById(Ahtml).innerHTML != "") { 
+						//document.getElementById('transcript').value += "USER: "+document.getElementById(Xihtml).value+"\n"; 
+						convo_bin.push("USER: "+document.getElementById(Xihtml).value+"\n");
+					}
+				} else {
+					//document.getElementById('transcript').value += "USER: "+document.getElementById(Ahtml).innerHTML+"\n";
+					convo_bin.push("USER: "+document.getElementById(Ahtml).innerHTML+"\n");
+				}
+				document.getElementById('Choices').innerHTML = '';
+				if (goingback == 0) {
+					setTimeout(function() {renderQnA(Qhtml,Jhtml,Dhtml,restart)}, 300);
+				} else {
+					renderQnA(Qhtml,Jhtml,Dhtml,restart);
+				}
+			} else {
+				document.getElementById('Choices').innerHTML = '';
+				path = [];
+				renderQnA(Qhtml,Jhtml,Dhtml,restart);			
+			}
+
+		}
+		
+	}
+
+
+	function renderQnA(Qht,Jht,Dht,restar) {
+		Dhtml = Dht;
+					
+		GOTOfired = 0;
+		path.push(label);
+
+		swapGOTO(Qht,Jht);
+
+		console.log("After swap: "+GOTOfired);
+
+		if (GOTOfired == 0) {
+			document.getElementById('QandA').innerHTML += "<div id="+Jht+" style=\"float:left;width:100%;height:1px;\"> </div>";
+		}
+		document.getElementById('QandA').innerHTML += "<div class='frame'><div class='full'><div class='question_text'>"+swapvar(document.getElementById(Qhtml).innerHTML)+"</div></div><div class='question_arrow'></div></div>";		
+
+		document.getElementById('QandA').innerHTML = document.getElementById('QandA').innerHTML.replace(/(\<br\>){2}/gi,"</div></div><div class='question_arrow'></div></div></div></div><div class='frame'><div class='full'><div class='question_text'>");
+		document.getElementById('QandA').innerHTML = document.getElementById('QandA').innerHTML.replace(/(\<br\> \<br\>)/gi,"<br><br>");
+
+		// add question 
+		//document.getElementById('transcript').value += swapvar("BOT: "+ document.getElementById(Qhtml).innerHTML);
+		//document.getElementById('transcript').value = document.getElementById('transcript').value.replace(/(\<br\>){2}/gi,"\nBOT: ");
+		this_text = swapvar("BOT: "+ document.getElementById(Qhtml).innerHTML);
+		this_text = this_text.replace(/(\<br\>){2}/gi,"\nBOT: ");
+		convo_bin.push(this_text);
+				
+		// make push doc into array in doc() cycle through array and put into output
+		// maybe remove doc div
+		if (document.getElementById(Dhtml)) {
+			doc_bin.push([document.getElementById(Dhtml).innerHTML,currentQ]);
+			console.log("Add to Doc ("+Dhtml+"): "+document.getElementById(Dhtml).innerHTML);
+			//document.getElementById('doc').innerHTML += document.getElementById(Dhtml).innerHTML;
+		}
+						
+		tmp = getElementsByIdRegExp("div", "A-"+label+"(\\.{1}\\d){1}$");
+		a_href = getElementsByIdRegExp("div", "A-href-"+label+"(\\.{1}\\d){1}$");
+		a_target = getElementsByIdRegExp("div", "A-target-"+label+"(\\.{1}\\d){1}$");
+		tmp_x = getElementsByIdRegExp("div", "X-"+label+"(\\.{1}\\d){1}$");
+		var Xishere = 0;
+		for ( var i = 0; i < tmp.length; i++ ) {
+			var nextlabel = tmp[i].id.substr(2);
+			var Xihtml = 'Xi-'+nextlabel;
+			var regexp = "\<variable\>";
+			var regexp_js = "^javascript:";
+			var regexp_load_js = "loadQnA";
+			var script_call = "";
+			if (tmp[i].innerHTML.match(regexp)) {
+				if (a_href[i].innerHTML.match('^(_blank:)?javascript:')) {
+					script_call = a_href[i].innerHTML.replace(/^(_blank:)?javascript:/gi,"");
+				} else {
+					if (a_href[i].innerHTML.match('^_blank:')) {
+						script_call = "window.open('"+a_href[i].innerHTML.replace(/^_blank:/,"")+"','_blank');";			
+					} else {
+						script_call = "location.href = '"+a_href[i].innerHTML+"';";
+					}
+				}
+				
+				if(a_href[i].innerHTML.match(regexp_load_js)){
+					//script_call = "xv = document.getElementById('"+Xihtml+"').value;" + script_call.replace(/this\.innerHTML/gi,"xv")
+					script_call = script_call.replace(/this\.innerHTML/gi,"document.getElementById('"+Xihtml+"').value")
+					document.getElementById('Choices').innerHTML += "<div class=\"xdiv\"><input type=\""+a_target[i].innerHTML+"\" id=\""+Xihtml+"\" name=\""+Xihtml+"\" class=\"xinput\" onkeypress=\"if (event.keyCode==13){"+script_call+"}\"/><a href=\"javascript:void('');\" class=\"xbutton\" onClick=\""+script_call+"\"><span class=\"qpad\">Send</span></a></div>";				
+				} else {
+					script_call = script_call.replace(/this\.innerHTML/gi,"document.getElementById('"+Xihtml+"').value")
+					document.getElementById('Choices').innerHTML += "<div class=\"xdiv\"><input type=\""+a_target[i].innerHTML+"\" id=\""+Xihtml+"\" name=\""+Xihtml+"\" class=\"xinput\" onkeypress=\"if (event.keyCode==13){answerQ('"+nextlabel+"');"+script_call+"}\"/><a href=\"javascript:void('');\" class=\"xbutton\" onClick=\"answerQ('"+nextlabel+"');"+script_call+"\"><span class=\"qpad\">Send</span></a></div>";
+				}
+				Xishere = Xihtml;
+				freetext = Xihtml;
+			} else if (a_href[i].innerHTML.match(regexp_js) && a_href[i].innerHTML != "javascript:void('');") {
+				tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
+				var script_call = a_href[i].innerHTML.replace(/^javascript:/gi,"");
+				if(a_href[i].innerHTML.match(regexp_load_js)){
+					document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"qabutton\" onClick=\""+script_call+"\" "+a_target[i].innerHTML+"><span class=\"qpad\">"+tmp[i].innerHTML+"</span></a>";							
+				} else {
+					document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"qabutton\" onClick=\"answerQ('"+nextlabel+"');"+script_call+"\" "+a_target[i].innerHTML+"><span class=\"qpad\">"+tmp[i].innerHTML+"</span></a>";							
+				}	
+				freetext = 0;
+			} else {
+				tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
+				document.getElementById('Choices').innerHTML += "<a href=\""+a_href[i].innerHTML+"\" class=\"qabutton\" onClick=\"answerQ('"+nextlabel+"');\" "+a_target[i].innerHTML+"><span class=\"qpad\">"+tmp[i].innerHTML+"</span></a>";				
+				freetext = 0;
+			}
+		}			
+
+		if (restar == undefined) {
+			
+			document.getElementById('Choices').innerHTML += "<div class=\"standard_buttons\">";
+			if (QNum > 1) { 
+				document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"sbutton\" onClick=\"goback(QNum);\">GO BACK ONE</a>";
+				document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"sbutton\" style=\"float:right\" onClick=\"startAT('1');\">START OVER</a>";
+			} else if (QNum == 1) {
+				document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"sbutton\" onClick=\"startAT('1');\">GO BACK ONE</a>";
+				document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"sbutton\" style=\"float:right\" onClick=\"startAT('1');\">START OVER</a>";				
+			}
+			document.getElementById('Choices').innerHTML += "</div>"
+		}
+				
+		if (QNum != 0) { 
+			if (goingback == 0) {
+				scroll2Q(Jht,800);           	
+			} else {
+				window.scrollTo(0, document.getElementById(Jht).offsetTop);     		
+			}
+		} else if (restar != undefined) {
+			window.scrollTo(0,0);
+		}
+		if (Xishere != 0 && window.self == window.top) {
+			console.log("Set focus for: "+Xishere);
+			document.getElementById(Xishere).focus();
+		}
+		console.log("Q#: "+QNum);
+		console.log("New Path: "+path);
+		QNum++;
+		goingback = 0;
+					
+	}
+
+	
+	function swapGOTO(QH,JH) {
+		var regex = new RegExp("GOTO:(\d*)(\.\d+)*");
+		if (regex.test(document.getElementById(QH).innerHTML)) {
+			var Qtext = document.getElementById(QH).innerHTML.match(/(GOTO:(\d*)(.\s*\d+)*)/);
+			document.getElementById('QandA').innerHTML += "<div id="+JH+" style=\"float:left;width:100%;height:1px;\"> </div>";
+			// Add question
+			// note I added () around the < to avoid a < followed by a ? which causes problems in php
+			var Qtexttrans = document.getElementById(QH).innerHTML.replace(/(<)?GOTO:(\d*)(.\s*\d+)*>?/,"");
+			Qtexttrans = Qtexttrans.replace(/\s*$/,"");
+			if (Qtexttrans != "") {
+				//document.getElementById('transcript').value += swapvar("BOT: "+Qtexttrans+"\n");
+				convo_bin.push(swapvar("BOT: "+Qtexttrans+"\n"));
+			}
+			if (document.getElementById(QH).innerHTML.match(/^GOTO:(\d*)(.\s*\d+)*/)) {
+				document.getElementById('QandA').innerHTML += document.getElementById(QH).innerHTML.replace(/(<)?GOTO:(\d*)(.\s*\d+)*>?/,"<"+Qtext+">");
+			} else {
+				document.getElementById('QandA').innerHTML += "<div class='frame'><div class='full'><div class='question_text'>"+ swapvar(document.getElementById(QH).innerHTML.replace(/(<)?GOTO:(\d*)(.\s*\d+)*>?/,"<"+Qtext+">"))+"</div></div><div class='question_arrow'></div></div>";						
+			}
+			// replace GOTO with text
+			label = Qtext[0].replace("GOTO:","");
+			Qhtml = 'Q-'+label;
+			if (document.getElementById(Dhtml)) {
+				doc_bin.push([document.getElementById(Dhtml).innerHTML,currentQ]);
+				console.log("Add to Doc ("+Dhtml+"): "+document.getElementById(Dhtml).innerHTML);
+				//document.getElementById('doc').innerHTML += document.getElementById(Dhtml).innerHTML;
+			}
+			Dhtml = 'D-'+label;
+			GOTOfired = 1;
+			console.log("In swap: "+GOTOfired);
+			swapGOTO(Qhtml,JH);
+		}
+	}
+
+	
+	function scroll2Q(id,speed) {
+		var top = document.getElementById(id).offsetTop; //Getting Y of target element
+		console.log("Jump to Y for ("+id+"): "+top);
+		//adapted from https://github.com/Yappli/smooth-scroll
+		var moving_frequency = 5; // Affects performance !
+		var hop_count = speed/moving_frequency
+        var getScrollTopDocumentAtBegin = document.documentElement.scrollTop + document.body.scrollTop;
+        var gap = (top - getScrollTopDocumentAtBegin) / hop_count;
+		for(var i = 1; i <= hop_count; i++)
+        {
+        	(function()
+           	{
+           		var hop_top_position = gap*i;
+           	    setTimeout(function(){  window.scrollTo(0, hop_top_position + getScrollTopDocumentAtBegin); }, moving_frequency*i);
+           	 })();
+        }
+	}
+
+	function getElementsByIdIs(selectorTag, name) {
+		var items = [];
+		var myPosts = document.getElementsByTagName(selectorTag);
+			//omitting undefined null check for brevity
+			if (myPosts[0].id == name) {
+				items.push(myPosts[0]);
+			}
+		
+		return items;
+	}
+
+	function getElementsByIdRegExp(selectorTag, expression) {
+		// note you need to escape \ in the expression with \, i.e., \\ = \
+		var regex = new RegExp(expression);
+		var items = [];
+		var myPosts = document.getElementsByTagName(selectorTag);
+		for (var i = 0; i < myPosts.length; i++) {
+			if (regex.test(myPosts[i].id)) {
+				items.push(myPosts[i]);
+			}
+		}
+		
+		return items;
+	}	
+
+	// startAT QnA
+	function startAT(id) {
+		document.getElementById('ondeck').innerHTML = document.getElementById('original').value;
+		document.getElementById('QandA').innerHTML = "";
+		//document.getElementById('transcript').value = "";
+		doc_bin = [];
+		convo_bin = [];
+		QNum = 0;
+		answerQ(id,'1');
+	}
+		
+	//show funtion
+	function show(id) { 
+   		if (document.getElementById) { // DOM3 = IE5, NS6
+        	document.getElementById(id).style.display = 'block';
+    	} else { 
+        	if (document.layers) {  
+            	document.id.display = 'block';
+        	} else {
+                document.all.id.style.display = 'block';
+        	}
+    	}
+	}
+
+	//hide funtion
+	function hide(id) { 
+    	if (document.getElementById) { // DOM3 = IE5, NS6
+        	document.getElementById(id).style.display = 'none';         
+    	} else { 
+        	if (document.layers) {  
+                document.id.display = 'none';
+        	} else {
+                document.all.id.style.display = 'none';
+        	}
+    	}
+	}
+
+	//show OR hide funtion depends on if element is shown or hidden
+	function shoh(id) { 
+    	if (document.getElementById) { // DOM3 = IE5, NS6
+        	if (document.getElementById(id).style.display == "none"){
+            	document.getElementById(id).style.display = 'block';
+        	} else {
+            	document.getElementById(id).style.display = 'none';         
+        	}   
+    	} else { 
+        	if (document.layers) {  
+            	if (document.id.display == "none"){
+                	document.id.display = 'block';
+            	} else {
+                	document.id.display = 'none';
+            	}
+        	} else {
+            	if (document.all.id.style.visibility == "none"){
+                	document.all.id.style.display = 'block';
+            	} else {
+                	document.all.id.style.display = 'none';
+            	}
+        	}
+    	}
+	}
+	
+	function swapvar(input) {
+		var output; 
+		for(var i = 0; i < QVnames.length; i++) {
+			if (document.getElementById(QVnames[i][1])) {
+				var item = QVnames[i][1].replace(/\./g,"\\.");
+				var varegx = new RegExp("<x>"+item+"<\/x>","gi");
+				//console.log(QVnames[i][1]);
+				input = input.replace(varegx,document.getElementById(QVnames[i][1]).innerHTML);
+			} 
+		}
+		output = input
+		return output
+	}
+	
+	function docforindex(indexID) {
+		for(var i = 0; i < doc_bin.length; i++) {
+			if(doc_bin[i][1] == indexID) {
+				return true;
+			}
+		}
+	}
+	function indexis(variablename) {
+		for(var i = 0; i < QVnames.length; i++) {
+			if(QVnames[i][1] == variablename) {
+				return QVnames[i][0];
+			}
+		}
+	}
+	function valueis(variablekey) {
+		for(var i = 0; i < QVnames.length; i++) {
+			if(QVnames[i][0] == variablekey) {
+				return QVnames[i][1];
+			}
+		}
+	}
+	
+	function look4goto(qn,id) {
+		console.log("GOTO SEARCH: "+id);
+		var qID = "Q-"+id;
+		// If there's a doc in the XXXXXXXXXXXXXXXX, remove it.
+		if (docforindex(path.indexOf(id))) {
+			console.log("DOC FOUND "+id);
+			doc_bin.splice(doc_bin.length-1,1);
+		}
+		convo_bin.splice(-2,2);
+		var re = new RegExp("GOTO:(([a-z0-9\._-]*)\s*)$","gi");
+		if (document.getElementById(qID).innerHTML.match(re)) {
+			convo_bin.splice(-1,1);
+			console.log("GOTO FOUND: "+id);
+			textinput = re.exec(document.getElementById(qID).innerHTML)[2]+"";
+			if (docforindex(indexis(textinput))) {
+				document.getElementById("Xi-"+path[qn]).value = document.getElementById(valueis(textinput)).innerHTML;
+				console.log("DOC FOUND "+textinput);
+				doc_bin.splice(doc_bin.length-1,1);
+			}
+			look4goto(qn,textinput);
+		}
+	}
+	
+	function goback(qn) {
+		Qlast = qn - 3
+		qn = qn - 2;
+		label = path[qn];
+		goingback = 1;
+		
+		console.log("GO BACK TO:"+qn);
+		var re = new RegExp('(((^|\\n).*)*)<div id="break-at-'+qn+'" class="frame">((.*)(\\W.*))*', 'g');
+		document.getElementById("QandA").innerHTML = document.getElementById("QandA").innerHTML.replace(re, '$1');
+		document.getElementById('Choices').innerHTML += "<input type=\"hidden\" id=\"Xi-"+path[qn]+"\" name=\"Xi-"+path[qn]+"\" value=\"\">";
+			console.log("####################: "+path[path.length-1]);
+		
+		//look4goto(qn,path[path.length-1]);
+		
+		path.splice(-1,1);
+		convo_bin.splice(-4,4);
+		//convo_bin.splice(-2,2);
+
+		// If there's a doc in the last Q that you're removing, hold on to it.
+		// And put it back after you've removed it. When you rerender the Q.
+		if (document.getElementById("X-"+path[qn]) && document.getElementById(valueis(path[Qlast]))) {
+			document.getElementById("Xi-"+path[qn]).value = document.getElementById(valueis(path[Qlast])).innerHTML;
+			doc_bin.splice(doc_bin.length-1,1);
+		}
+		
+		// If there's a doc in the current Q, remove it.
+		if (docforindex(currentQ)) {
+			console.log("DOC FOUND (current) "+currentQ);
+			doc_bin.splice(doc_bin.length-1,1);
+		}
+		// If there's a doc in the queued up Q, remove it. 
+		if (document.getElementById(Dhtml)) {
+			console.log("DOC FOUND (ondeck)"+Dhtml);
+			doc_bin.splice(doc_bin.length-1,1);
+		}
+		
+		look4goto(qn,path[path.length-1]);
+		
+		if (freetext != 0) {
+			document.getElementById(freetext).value = "";
+		}
+		QNum = qn;
+		loadQ = path[path.length-1];
+		path.splice(-1,1);
+		
+		console.log("Reload ans for: "+loadQ);
+		answerQ(loadQ);
+	}
+
+	function transcript(output) {
+		var convo_output = "";
+		for (var i = 0, len = convo_bin.length; i < len; i++) {
+			convo_output += convo_bin[i];
+		}
+		if (output == 1) {
+			return convo_output;
+		} else {
+			return convo_output.replace(/<[^>]*>/g,"");
+		}
+	}		
+	
+	function doc() {
+		var doc_output = ""; 
+		for (var i = 0, len = doc_bin.length; i < len; i++) {
+			doc_output += doc_bin[i][0];
+		}
+		return swapvar(doc_output);
+	}	
+	
+	function json_str() {
+		
+		var json_list = "{";
+		for(var i = 0; i < QVnames.length; i++) {
+			if (!document.getElementById("Q-"+QVnames[i][0]).innerHTML.match(/(GOTO:(\d*)(.\s*\d+)*)/)) {
+				if (document.getElementById(QVnames[i][1])) {
+					json_list = json_list+'"'+QVnames[i][1]+'":"'+document.getElementById(QVnames[i][1]).innerHTML+'"';
+				} else {
+					json_list = json_list+'"'+QVnames[i][1]+'":"'+'"';
+				}
+				json_list = json_list+",";
+			} 
+			if (i+1 == QVnames.length) {
+				json_list = json_list.replace(/,$/, '');
+				json_list = json_list+"}";
+			}
+		}
+		return json_list;
+	}
+
+	function mail2(to,subject,body) {
+		to = encodeURIComponent(to);
+		subject = encodeURIComponent(subject);
+		body = encodeURIComponent(body);
+		window.location.href = "mailto:"+to+"?subject="+subject+"&body="+body;
+	}
+	
+	function submit2(action,method,docAs,instructions,transcriptAs,jsonAs,target) {
+		document.FORM.action = action;
+		document.FORM.method = method;
+		if (target) {
+			document.FORM.target = target;
+		} else {
+			document.FORM.target = "_self";		
+		}
+		
+		if (docAs) {
+			if (document.getElementsByName(docAs).length == 0) { 
+				var doctext = document.createElement("textarea");
+				doctext.style.display ='none';
+				doctext.name= docAs;
+				doctext.value= doc();
+				document.getElementById('FORM').appendChild(doctext);
+			} else {
+				$('textarea[name='+docAs+']').val(json_str())
+			}
+			if (instructions) {
+				if (document.getElementsByName('i').length == 0) { 
+					var instructtext = document.createElement("textarea");
+					instructtext.type='hidden';
+					instructtext.style.display ='none';
+					instructtext.name= 'i';
+					instructtext.value= instructions;
+					document.getElementById('FORM').appendChild(instructtext);	
+				} else {
+					$('textarea[name=i]').val(json_str())
+				}
+			}
+		}
+		if (transcriptAs) {
+			if (document.getElementsByName(transcriptAs).length == 0) { 
+				var ttext = document.createElement("textarea");
+				ttext.type='hidden';
+				ttext.style.display ='none';
+				ttext.name= transcriptAs;
+				ttext.value= transcript();
+				document.getElementById('FORM').appendChild(ttext);
+			} else {
+				$('textarea[name='+transcriptAs+']').val(json_str())
+			}
+		}
+		if (jsonAs) {
+			if (document.getElementsByName(jsonAs).length == 0) { 
+				var json = document.createElement("textarea");
+				json.type='hidden';
+				json.style.display ='none';
+				json.name= jsonAs;			
+				json.value= json_str();
+				document.getElementById('FORM').appendChild(json);
+			} else {
+				$('textarea[name='+jsonAs+']').val(json_str())
+			}
+		}
+		var ondeckdiv = document.getElementById('ondeck').innerHTML;
+		var rawmarkupdiv = document.getElementById('rawmarkup').innerHTML;
+		document.getElementById('ondeck').innerHTML = "";
+		document.getElementById('rawmarkup').innerHTML = "";
+		document.FORM.submit();
+		document.getElementById('ondeck').innerHTML = ondeckdiv;
+		document.getElementById('rawmarkup').innerHTML = rawmarkupdiv;
+	}
+	
+	function csv() {
+		var csv_list = "";
+		for(var i = 0; i < QVnames.length; i++) {
+			if (!document.getElementById("Q-"+QVnames[i][0]).innerHTML.match(/(GOTO:(\d*)(.\s*\d+)*)/)) {
+				csv_list = csv_list+'"'+QVnames[i][1]+'"';
+				csv_list = csv_list+",";
+			} 
+			if (i+1 == QVnames.length) {
+				csv_list = csv_list.replace(/,$/, '');
+				csv_list = csv_list+"\n";
+			}
+		}
+		for(var i = 0; i < QVnames.length; i++) {
+			if (!document.getElementById("Q-"+QVnames[i][0]).innerHTML.match(/(GOTO:(\d*)(.\s*\d+)*)/)) {
+				if (document.getElementById(QVnames[i][1])) {
+					csv_list = csv_list+'"'+document.getElementById(QVnames[i][1]).innerHTML+'"';
+				} else {
+					csv_list = csv_list+'""';
+				}
+				csv_list = csv_list+",";
+			} 			
+			if (i+1 == QVnames.length) {
+				csv_list = csv_list.replace(/,$/, '');
+				csv_list = csv_list+"\n";
+			}
+		}
+
+		return csv_list;
+	}
+	
+	function getvar(val) {
+		return document.getElementById(val).value;
+	}
+
+	function goto(val) {
+	   answerQ(indexis(val));
+	}
+
+	// h/t http://runnable.com/U5HC9xtufQpsu5aj/use-javascript-to-save-textarea-as-a-txt-file
+	function save2(filename,content)
+	{
+
+	// I'm using file system support as a proxy for support for this feature. 
+	// Check based on one found at: http://blog.teamtreehouse.com/building-an-html5-text-editor-with-the-filesystem-apis
+	// Handle vendor prefixes.
+	window.requestFileSystem = window.requestFileSystem || 
+							   window.webkitRequestFileSystem;
+	// Check for support.
+	if (window.requestFileSystem) {
+	// content = ID of textarea to save
+	// name = name to save file as, including file extension     
+	// grab the content of the form field and place it into a variable
+	//    var textToWrite = document.getElementById(content).value;
+	//  create a new Blob (html5 magic) that conatins the data from your form feild
+		var textFileAsBlob = new Blob([content], {type:'text/plain'});
+		
+	// Specify the name of the file to be saved
+		var fileNamecontentAs = filename;
+		
+	// Optionally allow the user to choose a file name by providing 
+	// an imput field in the HTML and using the collected data here
+	// var fileNamecontentAs = txtFileName.text;
+
+	// create a link for our script to 'click'
+		var downloadLink = document.createElement("a");
+	//  supply the name of the file (from the var above).
+	// you could create the name here but using a var
+	// allows more flexability later.
+		downloadLink.download = fileNamecontentAs;
+	// provide text for the link. This will be hidden so you
+	// can actually use anything you want.
+		downloadLink.innerHTML = "My Hidden Link";
+		
+	// allow our code to work in webkit & Gecko based browsers
+	// without the need for a if / else block.
+		window.URL = window.URL || window.webkitURL;
+			  
+	// Create the link Object.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+	// when link is clicked call a function to remove it from
+	// the DOM in case user wants to save a second file.
+		downloadLink.onclick = destroyClickedElement;
+	// make sure the link is hidden.
+		downloadLink.style.display = "none";
+	// add the link to the DOM
+		document.body.appendChild(downloadLink);
+		
+	// click the new link
+		downloadLink.click();
+	} else {
+		alert('This feature is not supported by your browser.');
+	}
+		
+	}
+
+	function destroyClickedElement(event)
+	{
+	// remove the link from the DOM
+		document.body.removeChild(event.target);
+	}
+
+	// EOF
+
+</script>
+
+
+</BODY>
+</HTML>

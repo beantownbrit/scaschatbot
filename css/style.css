@@ -45,8 +45,20 @@ span {
 input { 
 	border: 0; 
 	padding: 15px; 
-	margin-left: auto;
-	border-radius: 10px; 
+	margin-left: center;
+	border-radius: 10px;
+  margin: 14px 2px;
+  height: 100px;
+}
+
+#send-msg {
+	border: 0; 
+	padding: 15px; 
+	margin-left: center;
+	border-radius: 10px;
+  background-color: #ad5e5d;
+  width: 100px;
+  height: 100px;
 }
 
 .messages {
@@ -79,6 +91,10 @@ input {
 	margin: 1%;
 }
 
+#user-input:focus,
+#send-msg:focus {
+    outline: none;
+}
 
 /* Mobile Settings */
 

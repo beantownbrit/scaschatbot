@@ -1,4 +1,4 @@
-// User query options
+// constants.js
 const prompts = [
   ["ian"],
   ["hi", "hey", "hello", "good morning", "good afternoon"],
@@ -48,3 +48,18 @@ const replies = [
   ["Please say something :("],
   ["Haha!","Good one!"]
 ]
+
+
+function sendMsg(from, content) {
+    currentGridRow++;
+    let newMsg = `<div class="message ${from}" style="grid-row-start:${currentGridRow}">${content}</div>`;
+    display.innerHTML += newMsg;
+}
+
+sendMsg('from-scasbot', `${getRandArrItem(greetingVocab)}! I'm the Harvard SCAS Chatbot, a resource directory of small claims information.`);
+
+sendMsg('from-scasbot', `What can I help you with today?`);
+
+window.addEventListener('keydown', function() {
+    if (event.code === 13) runApp();
+})

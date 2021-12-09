@@ -61,6 +61,13 @@ a.foota {
 	color:#00ff00;
 }
 
+#logo {
+	margin:5px auto;
+	width:180px;
+	height:60px;
+	background-color: transparent;
+}
+
 .add {
 	float:left;
 	text-align:center;

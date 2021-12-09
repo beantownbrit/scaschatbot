@@ -30,7 +30,7 @@ span {
 }
 
 .chat {
-	height: 400px;
+	height: 750px;
 	width: 50vw;
 	display: flex;
 	flex-direction: column;
@@ -91,10 +91,6 @@ input {
 	margin: 1%;
 }
 
-#user-input:focus,
-#send-msg:focus {
-    outline: none;
-}
 
 /* Mobile Settings */
 

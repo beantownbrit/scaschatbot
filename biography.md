@@ -1,4 +1,4 @@
-# SCAS Chatbot
+# SCASbot - Massachusetts Small Claims Advisory Service Chatbot
 Chatbot created for the [Harvard Small Claims Advisory Service](http://masmallclaims.org/). This chatbot serves as my final project submission for Suffolk University Law School's Coding the Law course.
  
 Interact with the bot [here!]( https://beantownbrit.github.io/scaschatbot/)

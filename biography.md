@@ -24,6 +24,7 @@ Although it was clear upon my first test, I asked my partner to try each bot on 
 As of this submission, the bot has undergone two iterations of end-user testing. The first iteration of the bot was shown to the co-directors over a Zoom meeting screen share. They were thrilled with the overall functionality of the bot and found it visually appealing. The second and current iteration allows users to access a live demo via on Github. Feedback on this iteration thus far has been extremely positive regarding responsiveness and applicability; one feature they expressed interest in seeing across user input was the "start over" button on the bottom.
 
 Feedback from the first iteration regarding additional content taken from new updates to their website and text sizing was thoughtfully integrated. While still in progress, user testing of the bot's second iteration has generated more positive feedback and helpful comments:
+
 ![alt text](https://beantownbrit.github.io/scaschatbot/img/FinalFeedback_censored.jpg)
 
 # Intro Pitch

@@ -40,12 +40,10 @@ The chatbot outputs predictable, stable, and appropriate responses to user input
 # Documentation
 The chatbot's initial output upon loading the site displays instructions to the user regarding its purpose and categories of knowledge. It also clearly indicates the entity behind the chatbot and a disclaimer on the bot's intended use. The internal structure continuously loops back to the main menu to ensure users can access the instructions at any point of interaction.
 
-Additionally, the chatbot's [README](https://github.com/beantownbrit/scaschatbot) includes guidance for the Tech Director/volunteers who will be maintaining the chatbot.
+Additionally, the chatbot's [README](https://github.com/beantownbrit/scaschatbot) includes useful links for the Tech Director/volunteers who will be maintaining the chatbot.
 
 # Real World Viability
 I really enjoyed catering to this particular aspect of the project, as the chatbot directly addresses real-world access to justice needs by expanding the number of free online legal information tools. The chatbot solves the needs of both community members seeking basic information and volunteers reducing their responses to repetitive queries backlogging their inbox. The chatbot is ready to be integrated into the website, whether as a widget or an external link to Github. Any edits to the code can be easily accessed and made by the Tech Director or delegated volunteers without restrictions.
 
 # Sustainability
-At the end of each fall semester, SCAS holds elections for its officers. The co-directors I had been working with have put me in touch with their successors as well as the newly elected Tech Director.* The Tech Director will be responsible for the chatbot's upkeep, with co-directors ensuring appropriate cadence of maintenance and updates. One of the newly appointed co-directors has already emailed me and express excited interest in moving forward with implementation as well as noting the new Tech Director has previous experience with Github.
-
-*I had emailed his predecessor throughout the semester but was ultimately unsuccessful in speaking to him.
+At the end of each fall semester, SCAS holds elections for its officers. The co-directors I had been working with have put me in touch with their successors as well as the newly elected Tech Director. I had emailed his predecessor numerous times but was ultimately unsuccessful in speaking with him about website integration and sustainability. The new Tech Director will be responsible for the chatbot's upkeep, with co-directors ensuring appropriate cadence of maintenance and updates. One of the newly appointed co-directors has already emailed me and express excited interest in moving forward with implementation as well as noting the new Tech Director has previous experience with Github.

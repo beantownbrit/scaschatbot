@@ -25,6 +25,8 @@ As of this submission, the bot has undergone two iterations of end-user testing.
 
 Feedback from the first iteration regarding additional content taken from new updates to their website and text sizing was thoughtfully integrated. While still in progress, user testing of the bot's second iteration has generated more positive feedback and helpful comments.
 
+<b>User Testing Timeline</b>
+
 # Intro Pitch
 My [intro pitch](https://docs.google.com/presentation/d/1jl1PyJD6qnVzsabswbl03yFIyGtriwfbM6fw0eIw7p0/edit?usp=sharing) described SCAS, its clients, and the problem its volunteers continue to face in responding to backlogged community requests for legal assistance. I described how the organization's current options were unsatisfactory, outlined my proposed chatbot solution, what my solution would attempt to alleviate (backlog), and what it would not replace (volunteers).
  
